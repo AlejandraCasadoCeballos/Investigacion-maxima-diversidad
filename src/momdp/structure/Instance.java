@@ -20,6 +20,14 @@ public class Instance {
         readInstance();
     }
 
+    public Instance(String name, int numNodes, int numNodesSol, float[][] distances){
+        this.path = "";
+        this.name = name;
+        this.numNodes = numNodes;
+        this.numNodesSol = numNodesSol;
+        this.distances = distances;
+    }
+
     private void readInstance(){
         try{
             File file = new File(path);

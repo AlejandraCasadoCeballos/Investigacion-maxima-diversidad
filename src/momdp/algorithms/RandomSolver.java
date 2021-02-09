@@ -22,6 +22,14 @@ public class RandomSolver extends Solver {
             allElements.remove(numRandom);
             solElements.add(element);
         }
+
+        System.out.println("Solution elements");
+        for(int i : solElements){
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+
         getMetrics();
     }
 }
