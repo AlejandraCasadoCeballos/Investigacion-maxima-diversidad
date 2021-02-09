@@ -7,11 +7,11 @@ import java.text.DecimalFormatSymbols;
 
 public class Instance {
 
-    public String name;
-    public String path;
-    public int numNodes;
-    public int numNodesSol;
-    public float[][] distances;
+    String name;
+    String path;
+    int numNodes;
+    int numNodesSol;
+    float[][] distances;
     float maxDistance = 0.0f;
 
     public Instance(String name, String path){
@@ -73,5 +73,21 @@ public class Instance {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public int getNumNodes() {
+        return numNodes;
+    }
+
+    public int getNumNodesSol() {
+        return numNodesSol;
+    }
+
+    public float[][] getDistances() {
+        return distances;
+    }
+
+    public float getMaxDistance() {
+        return maxDistance;
     }
 }

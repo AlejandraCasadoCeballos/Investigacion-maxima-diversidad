@@ -1,5 +1,7 @@
 package momdp;
 
+import momdp.algorithms.RandomSolver;
+import momdp.algorithms.Solver;
 import momdp.structure.Instance;
 
 import java.io.File;
@@ -22,9 +24,14 @@ public class Main {
     static String instanceFolderPath;
 
     final public static boolean DEBUG = true;
+    static Solver solver=new RandomSolver();
 
     public static void main(String[] args){
         readData();
+        for (Instance instance:instances) {
+            solver.solve(instance);
+        }
+
     }
 
     private static void readData(){
