@@ -5,7 +5,8 @@ import momdp.structure.Instance;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solver {
+public class Solver { //esta clase se pasa a llamar constructive, las metricas van en solution, se quitan de aqui
+    //esto debería ser una interfaz, random implementa esta interfaz
 
     protected Instance instance;
     protected float[][] distances;

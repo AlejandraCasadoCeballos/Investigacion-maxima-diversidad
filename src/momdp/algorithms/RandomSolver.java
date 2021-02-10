@@ -4,7 +4,7 @@ import momdp.structure.Instance;
 
 import java.util.*;
 
-public class RandomSolver extends Solver {
+public class RandomSolver extends Solver { //esta clase se pasa a llamar randomconstructive
 
     @Override
     public void solve(Instance instance) {
