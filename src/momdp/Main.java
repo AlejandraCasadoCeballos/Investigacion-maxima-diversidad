@@ -1,7 +1,7 @@
 package momdp;
 
-import momdp.algorithms.RandomSolver;
-import momdp.algorithms.Solver;
+import momdp.constructive.RandomConstructive;
+import momdp.constructive.IConstructive;
 import momdp.structure.Instance;
 
 import java.io.File;
@@ -15,7 +15,7 @@ public class Main {
     final static String pathFolder= "./instances";
     static ArrayList<Instance> instances;
 
-    final static boolean readFromInput = true;
+    final static boolean readFromInput = false;
     final static boolean readAllFolders = false;
     final static boolean readAllInstances = false;
     final static String folderIndex = "GKD-a";
@@ -25,13 +25,13 @@ public class Main {
     static List<String> instancesNames;
     static String instanceFolderPath;
 
-    final public static boolean DEBUG = true;
-    static Solver solver=new RandomSolver();
+    final public static boolean DEBUG = false;
+    static IConstructive constructive =new RandomConstructive();
 
     public static void main(String[] args){
         readData();
         for (Instance instance:instances) {
-            solver.solve(instance);
+            constructive.solve(instance);
         }
     }
 

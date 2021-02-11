@@ -94,8 +94,4 @@ public class Instance {
     public float[][] getDistances() {
         return distances;
     }
-
-    public float getMaxDistance() {
-        return maxDistance;
-    }
 }
