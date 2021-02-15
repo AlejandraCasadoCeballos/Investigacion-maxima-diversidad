@@ -29,10 +29,7 @@ public class Instance {
     }
 
     private void readInstance(){
-        try{
-            File file = new File(path);
-            Reader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+        try(BufferedReader br = new BufferedReader(new FileReader(path))){
             String line;
             boolean firstLine = true;
             String[] parts;
@@ -58,8 +55,7 @@ public class Instance {
                 }
             }
             if(Main.DEBUG)printDistancesMatrix();
-            fr.close();
-            br.close();
+
 
         } catch (FileNotFoundException e){
             System.out.println(("File not found " + path));

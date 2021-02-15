@@ -20,7 +20,6 @@ public class RandomConstructive implements IConstructive {
         int numRandom;
         int element;
         List<Integer> allElements=new ArrayList<>(instance.getNumNodes());
-        Solution sol;
 
         for(int j = 0; j < numSolutions; j++){
             for(int i=0;i<instance.getNumNodes();i++){

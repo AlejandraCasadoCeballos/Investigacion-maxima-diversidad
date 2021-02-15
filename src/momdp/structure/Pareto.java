@@ -46,8 +46,7 @@ public abstract class Pareto {
     }
 
     public static void saveToFile(String path, Instance instance){
-        try(FileWriter fw=new FileWriter(path+"/"+instance.getName().replaceFirst(".txt","")+"_"+ Main.numSolutions+".txt");
-            BufferedWriter bw=new BufferedWriter(fw)){
+        try(BufferedWriter bw=new BufferedWriter(new FileWriter(path+"/"+instance.getName().replaceFirst(".txt","")+"_"+ Main.numSolutions+".txt"))){
 
             for (Solution f: front){
                 bw.write(f.getMaxSum()+" "+f.getMaxMin()+" "+f.getMaxMinSum()+" "+f.getMinDiff()+" "+f.getMinPCenter());
