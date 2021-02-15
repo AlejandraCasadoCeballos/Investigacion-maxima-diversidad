@@ -2,10 +2,7 @@ package momdp.structure;
 
 import momdp.Main;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,11 +43,10 @@ public abstract class Pareto {
     }
 
     public static void saveToFile(String path, Instance instance){
-        try(BufferedWriter bw=new BufferedWriter(new FileWriter(path+"/"+instance.getName().replaceFirst(".txt","")+"_"+ Main.numSolutions+".txt"))){
 
+        try(PrintWriter pw = new PrintWriter(path+"/"+instance.getName().replaceFirst(".txt","")+"_"+ Main.numSolutions+".txt");){
             for (Solution f: front){
-                bw.write(f.getMaxSum()+" "+f.getMaxMin()+" "+f.getMaxMinSum()+" "+f.getMinDiff()+" "+f.getMinPCenter());
-                bw.newLine();
+                pw.println(f.getMaxSum()+" "+f.getMaxMin()+" "+f.getMaxMinSum()+" "+f.getMinDiff()+" "+f.getMinPCenter());
             }
         }
         catch (IOException e){
