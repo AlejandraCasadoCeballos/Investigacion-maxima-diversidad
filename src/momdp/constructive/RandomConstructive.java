@@ -11,7 +11,7 @@ import java.util.*;
 public class RandomConstructive implements IConstructive {
 
     public String getName(){
-        return "RandomConstructive_"+ Main.seed;
+        return "randomConstructive_"+ Main.seed;
     }
 
     public void solve(Instance instance, int numSolutions) {

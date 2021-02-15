@@ -23,7 +23,7 @@ public class Main {
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
-    private final static boolean readAllInstances = false;
+    private final static boolean readAllInstances = true;
 
     private final static String folderIndex = "GKD-a";
     private final static String instanceIndex = "GKD-a_11_n10_m4.txt";
