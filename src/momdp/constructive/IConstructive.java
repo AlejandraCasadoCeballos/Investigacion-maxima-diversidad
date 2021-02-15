@@ -4,4 +4,5 @@ import momdp.structure.Instance;
 
 public interface IConstructive {
     void solve(Instance instance, int numSolutions);
+    String getName();
 }

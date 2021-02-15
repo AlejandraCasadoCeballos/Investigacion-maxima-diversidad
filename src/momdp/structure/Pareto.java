@@ -1,13 +1,19 @@
 package momdp.structure;
 
+import momdp.Main;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Pareto {
 
-    static List<Solution> front;
+    private static List<Solution> front;
 
-    static boolean modifiedSinceLastAsk = false;
+    private static boolean modifiedSinceLastAsk = false;
 
     public static void reset(int numSolutions){
         front = new ArrayList<>(numSolutions);
@@ -39,8 +45,18 @@ public abstract class Pareto {
         if(enter)front.add(solution);
     }
 
-    public static void saveToFile(){
+    public static void saveToFile(String path, Instance instance){
+        try(FileWriter fw=new FileWriter(path+"/"+instance.getName().replaceFirst(".txt","")+"_"+ Main.numSolutions+".txt");
+            BufferedWriter bw=new BufferedWriter(fw)){
 
+            for (Solution f: front){
+                bw.write(f.getMaxSum()+" "+f.getMaxMin()+" "+f.getMaxMinSum()+" "+f.getMinDiff()+" "+f.getMinPCenter());
+                bw.newLine();
+            }
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
     }
 
     public static List<Solution> getFront() {

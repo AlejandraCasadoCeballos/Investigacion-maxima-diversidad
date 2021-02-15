@@ -14,32 +14,36 @@ import java.util.Scanner;
 
 public class Main {
 
-    final static String pathFolder= "./instances";
-    static ArrayList<Instance> instances;
+    private final static String pathFolder= "./instances";
+    private final static String pathSolFolder="./pareto";
+    private static ArrayList<Instance> instances;
 
-    final static int seed = 13;
-    final static boolean readFromInput = false;
-    final static boolean readAllFolders = false;
-    final static boolean readAllInstances = false;
-    final static int numSolutions = 100;
-    final static String folderIndex = "GKD-a";
-    final static String instanceIndex = "GKD-a_11_n10_m4.txt";
+    public final static int seed = 13;
+    public final static int numSolutions = 1000;
 
-    static List<String> foldersNames;
-    static List<String> instancesNames;
-    static String instanceFolderPath;
+    private final static boolean readFromInput = false;
+    private final static boolean readAllFolders = false;
+    private final static boolean readAllInstances = false;
 
-    final public static boolean DEBUG = false;
-    static IConstructive constructive =new RandomConstructive();
+    private final static String folderIndex = "GKD-a";
+    private final static String instanceIndex = "GKD-a_11_n10_m4.txt";
+
+    private static List<String> foldersNames;
+    private static List<String> instancesNames;
+    private static String instanceFolderPath;
+
+    public final static boolean DEBUG = false;
+    private static IConstructive constructive =new RandomConstructive();
 
     public static void main(String[] args){
 
         readData();
+        String constructivePath=createSolFolder();
         for (Instance instance:instances) {
             RandomManager.setSeed(seed);
             Pareto.reset(numSolutions);
             constructive.solve(instance, numSolutions);
-            Pareto.saveToFile();
+            Pareto.saveToFile(constructivePath, instance);
         }
     }
 
@@ -54,6 +58,18 @@ public class Main {
             else if (foldersNames.contains(folderIndex)) readFolder(folderIndex);
             else System.out.println("Folder index exceeds the bounds of the array");
         }
+
+    }
+
+    public static String createSolFolder(){
+        String path=pathSolFolder+"/"+constructive.getName();
+        File file =new File(path);
+        if(!file.exists()){
+            boolean bool = file.mkdir();
+            if(!bool) System.out.println("Problem creating the folder: "+ constructive.getName());
+        }
+
+        return path;
 
     }
 

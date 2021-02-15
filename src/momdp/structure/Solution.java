@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Solution {
 
-    Instance instance;
+    private Instance instance;
     protected List<Integer> solElements;
-    int maxSum;
-    float maxMin;
-    float maxMinSum;
-    float minDiff;
-    float minPCenter;
+    private int maxSum;
+    private float maxMin;
+    private float maxMinSum;
+    private float minDiff;
+    private float minPCenter;
 
     public Solution(Instance instance, List<Integer> solElements){
         this.instance = instance;

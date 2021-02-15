@@ -7,12 +7,12 @@ import java.text.DecimalFormatSymbols;
 
 public class Instance {
 
-    String name;
-    String path;
-    int numNodes;
-    int numNodesSol;
-    float[][] distances;
-    float maxDistance = 0.0f;
+    private String name;
+    private String path;
+    private int numNodes;
+    private int numNodesSol;
+    private float[][] distances;
+    private float maxDistance = 0.0f;
 
     public Instance(String name, String path){
         this.path = path;
@@ -58,6 +58,8 @@ public class Instance {
                 }
             }
             if(Main.DEBUG)printDistancesMatrix();
+            fr.close();
+            br.close();
 
         } catch (FileNotFoundException e){
             System.out.println(("File not found " + path));
@@ -93,5 +95,9 @@ public class Instance {
 
     public float[][] getDistances() {
         return distances;
+    }
+
+    public String getName() {
+        return name;
     }
 }
