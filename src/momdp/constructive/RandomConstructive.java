@@ -8,10 +8,12 @@ import java.util.*;
 
 public class RandomConstructive implements IConstructive {
 
+    final static int seed = 13;
+
     public void solve(Instance instance) {
         List<Integer> solElements = new ArrayList<>();
 
-        RandomManager.setSeed(13);
+        RandomManager.setSeed(seed);
         Random rnd= RandomManager.getRandom();
 
         List<Integer> allElements=new ArrayList<>(instance.getNumNodes());
