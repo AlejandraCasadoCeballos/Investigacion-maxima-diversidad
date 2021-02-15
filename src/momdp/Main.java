@@ -3,6 +3,8 @@ package momdp;
 import momdp.constructive.RandomConstructive;
 import momdp.constructive.IConstructive;
 import momdp.structure.Instance;
+import momdp.structure.Pareto;
+import momdp.structure.RandomManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,9 +17,11 @@ public class Main {
     final static String pathFolder= "./instances";
     static ArrayList<Instance> instances;
 
+    final static int seed = 13;
     final static boolean readFromInput = false;
     final static boolean readAllFolders = false;
     final static boolean readAllInstances = false;
+    final static int numSolutions = 100;
     final static String folderIndex = "GKD-a";
     final static String instanceIndex = "GKD-a_11_n10_m4.txt";
 
@@ -29,9 +33,13 @@ public class Main {
     static IConstructive constructive =new RandomConstructive();
 
     public static void main(String[] args){
+
         readData();
         for (Instance instance:instances) {
-            constructive.solve(instance);
+            RandomManager.setSeed(seed);
+            Pareto.reset(numSolutions);
+            constructive.solve(instance, numSolutions);
+            Pareto.saveToFile();
         }
     }
 

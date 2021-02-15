@@ -1,16 +1,23 @@
 package momdp.structure;
 
+import momdp.Main;
+
 import java.util.List;
 
 public class Solution {
 
     Instance instance;
     protected List<Integer> solElements;
+    int maxSum;
+    float maxMin;
+    float maxMinSum;
+    float minDiff;
+    float minPCenter;
 
     public Solution(Instance instance, List<Integer> solElements){
         this.instance = instance;
         this.solElements = solElements;
-        print();
+        if(Main.DEBUG) print();
         calculateMetrics();
     }
 
@@ -24,11 +31,10 @@ public class Solution {
 
 
     protected void calculateMetrics(){
-        int maxSum=0;
-        float maxMin=Float.MAX_VALUE;
-        float maxMinSum=Float.MAX_VALUE;
-        float minDiff;
-        float minPCenter = Float.MIN_VALUE;
+        maxSum=0;
+        maxMin=Float.MAX_VALUE;
+        maxMinSum=Float.MAX_VALUE;
+        minPCenter = Float.MIN_VALUE;
 
         int nodeA;
         int nodeB;
@@ -80,11 +86,32 @@ public class Solution {
             if(minDist > minPCenter) minPCenter = minDist;
         }
 
-        System.out.println("MAX SUM: " + maxSum);
-        System.out.println("MAX MIN: " + maxMin);
-        System.out.println("MAX MIN SUM: " + maxMinSum);
-        System.out.println("MIN DIFF: " + minDiff);
-        System.out.println("MIN P CENTER: " + minPCenter);
+        if(Main.DEBUG){
+            System.out.println("MAX SUM: " + maxSum);
+            System.out.println("MAX MIN: " + maxMin);
+            System.out.println("MAX MIN SUM: " + maxMinSum);
+            System.out.println("MIN DIFF: " + minDiff);
+            System.out.println("MIN P CENTER: " + minPCenter);
+        }
     }
 
+    public int getMaxSum() {
+        return maxSum;
+    }
+
+    public float getMaxMin() {
+        return maxMin;
+    }
+
+    public float getMaxMinSum() {
+        return maxMinSum;
+    }
+
+    public float getMinDiff() {
+        return minDiff;
+    }
+
+    public float getMinPCenter() {
+        return minPCenter;
+    }
 }
