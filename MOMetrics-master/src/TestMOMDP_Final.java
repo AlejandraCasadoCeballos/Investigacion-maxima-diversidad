@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class TestPCPD_Final {
+public class TestMOMDP_Final {
 
     public static void prepareFronts(boolean[] minimizing, String pathGlobal, String[] paths, String pathJmetal, String[] pathsOut, String instanceName, String pathOutRef) {
         Pareto pareto = new Pareto(minimizing);
@@ -113,34 +113,16 @@ public class TestPCPD_Final {
     }
 
     public static void evaluateDir() throws FileNotFoundException {
-        String pathGlobal = "/Users/jesus.sanchezoro/ResultadosInvestigacion/pcpd/preliminar/table4_deltanonimprove";
+        String pathGlobal = "../MOMDP/pareto";
         String[] paths = new String[]{
-//                "NSGAII",
-//                "MOEAD",
-//                "SPEA2",
-//                "PIG",
-//                "EPSILON"
-                "3_0.1",
-                "3_0.2",
-                "3_0.3",
-                "3_0.4",
-                "3_0.5",
-                "5_0.1",
-                "5_0.2",
-                "5_0.3",
-                "5_0.4",
-                "5_0.5",
-                "10_0.1",
-                "10_0.2",
-                "10_0.3",
-                "10_0.4",
-                "10_0.5",
+                "randomConstructive_Seed_13_SolCount_100",
+                "randomConstructive_Seed_13_SolCount_1000",
         };
-        boolean[] minimizing = new boolean[]{true, false};
+        boolean[] minimizing = new boolean[]{false, false, false, true, true};
         String pathJMetal = pathGlobal+"/jmetal";
         new File(pathJMetal).mkdirs();
 
-        try (PrintWriter pw = new PrintWriter("pcpd_analysis.csv")) {
+        try (PrintWriter pw = new PrintWriter("momdp_analysis.csv")) {
             String matching = "";
             String headers = "INSTANCE";
             for (int i = 0; i < paths.length; i++) {
@@ -184,7 +166,7 @@ public class TestPCPD_Final {
                     GenerationalDistance<PointSolution> gd = new GenerationalDistance<>();
                     GeneralizedSpread<PointSolution> sp = new GeneralizedSpread<>();
                     InvertedGenerationalDistancePlus<PointSolution> igd = new InvertedGenerationalDistancePlus<>();
-                    System.out.println(igd.isTheLowerTheIndicatorValueTheBetter());
+                    //System.out.println(igd.isTheLowerTheIndicatorValueTheBetter());
                     for (int i = 0; i < sols.length; i++) {
                         double cov = coverage.evaluate(solsRef, sols[i]);
                         double hv = hypervolume.evaluate(sols[i]);
