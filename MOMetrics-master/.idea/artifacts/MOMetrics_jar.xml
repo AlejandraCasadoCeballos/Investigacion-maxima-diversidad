@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MOMetrics:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MOMetrics_jar</output-path>
+    <root id="archive" name="MOMetrics.jar">
+      <element id="module-output" name="MOMetrics" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../javalibs/JMetal/jmetal-algorithm-5.5.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../javalibs/JMetal/jmetal-core-5.5.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../javalibs/JMetal/jmetal-exec-5.5.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../javalibs/JMetal/jmetal-problem-5.5.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../javalibs/commons-io-2.6/commons-io-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../javalibs/commons-lang3-3.7/commons-lang3-3.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

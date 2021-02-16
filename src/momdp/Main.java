@@ -19,7 +19,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int numSolutions = 1000;
+    public final static int numSolutions = 100;
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
