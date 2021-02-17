@@ -8,7 +8,7 @@ public class Solution {
 
     private Instance instance;
     protected List<Integer> solElements;
-    private int maxSum;
+    private float maxSum;
     private float maxMin;
     private float maxMinSum;
     private float minDiff;
@@ -95,7 +95,7 @@ public class Solution {
         }
     }
 
-    public int getMaxSum() {
+    public float getMaxSum() {
         return maxSum;
     }
 

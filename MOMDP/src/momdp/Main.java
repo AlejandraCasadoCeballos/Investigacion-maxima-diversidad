@@ -1,7 +1,8 @@
 package momdp;
 
-import momdp.constructive.RandomConstructive;
-import momdp.constructive.IConstructive;
+
+import momdp.constructive.*;
+import momdp.constructive.grasp.*;
 import momdp.structure.Instance;
 import momdp.structure.Pareto;
 import momdp.structure.RandomManager;
@@ -20,7 +21,7 @@ public class Main {
 
     public final static int seed = 13;
     public final static int numSolutions = 100;
-    public static float alpha=0.5f;
+    public static float alpha=0.3f;
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
@@ -34,17 +35,21 @@ public class Main {
     private static String instanceFolderPath;
 
     public final static boolean DEBUG = false;
-    private static IConstructive constructive =new RandomConstructive();
+    private static IConstructive constructive =new GRASPConstructive_MO();
 
     public static void main(String[] args){
 
         readData();
         String constructivePath=createSolFolder();
+        float instanceCount = instances.size();
+        int i = 0;
         for (Instance instance:instances) {
+            System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
             Pareto.reset(numSolutions);
             constructive.solve(instance, numSolutions);
             Pareto.saveToFile(constructivePath, instance);
+            i++;
         }
     }
 

@@ -10,10 +10,6 @@ import java.util.*;
 
 public class RandomConstructive implements IConstructive {
 
-    public String getName(){
-        return "randomConstructive_Seed_"+ Main.seed+"_SolCount_"+Main.numSolutions;
-    }
-
     public void solve(Instance instance, int numSolutions) {
         List<Integer> solElements = new ArrayList<>(instance.getNumNodesSol());
         Random rnd= RandomManager.getRandom();
