@@ -2,7 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4360259f-41b1-4f17-bb07-b82459f5b79b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../MOMDP/Prácticas.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/Prácticas.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_19_n10_m6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_32_n15_m4.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_47_n15_m12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_52_n30_m6.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_57_n30_m9.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_65_n30_m12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_71_n30_m24.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-a_7_n10_m3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_13_n50_m5.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_17_n50_m15.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_1_n25_m2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_24_n100_m10.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_30_n100_m30.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_35_n125_m12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_37_n125_m37.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_48_n150_m45.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-b_8_n25_m7.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-c_13_n500_m50.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-c_18_n500_m50.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/GKD-c_1_n500_m50.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-a_37_n2000_m200.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-a_9_n500_m50.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-b_12_n500_m50.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-b_36_n2000_m200.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-c_10_n3000_m400.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-c_19_n3000_m600.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/MDG-c_3_n3000_m300.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-a_18_n50_m15.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-a_28_n100_m30.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-a_33_n125_m12.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-a_49_n150_m45.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-a_5_n25_m2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-b_11_n300_m90.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-b_14_n400_m80.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-b_20_n500_m200.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-b_2_n100_m20.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/instances/preliminar/SOM-b_8_n200_m80.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MOMDP/src/momdp/constructive/GRASPConstructive.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MOMDP/src/momdp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/src/momdp/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +59,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../commons-io-2.6.jar" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -48,7 +88,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1613473546523</updated>
+      <workItem from="1613552968598" duration="598000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

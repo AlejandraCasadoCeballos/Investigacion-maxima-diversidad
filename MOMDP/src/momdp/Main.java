@@ -20,13 +20,14 @@ public class Main {
 
     public final static int seed = 13;
     public final static int numSolutions = 100;
+    public static float alpha=0.5f;
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
     private final static boolean readAllInstances = true;
 
-    private final static String folderIndex = "GKD-a";
-    private final static String instanceIndex = "GKD-a_11_n10_m4.txt";
+    private final static String folderIndex = "preliminar";
+    private final static String instanceIndex = "SOM-b_2_n100_m20.txt";
 
     private static List<String> foldersNames;
     private static List<String> instancesNames;
