@@ -57,8 +57,8 @@ public abstract class GRASPConstructive implements IConstructive {
 
             sol.getElements().add(selectedNode);
             while(sol.getElements().size()<instance.getNumNodesSol()){
-                gmin = 0;
-                gmax = 0x3f3f3f;
+                gmin = 0x3f3f3f;
+                gmax = 0;
                 objectiveFunction();
                 limitIndex = findLimitIndexPerformant(alpha);
 
@@ -89,7 +89,7 @@ public abstract class GRASPConstructive implements IConstructive {
         int candidatesSize = candidates.size();
         float limit = minimize ? gmin+alpha*(gmax-gmin) : gmax-alpha*(gmax-gmin);
         for(int i = 0; i < candidatesSize; i++){
-            if(!((minimize && candidates.get(i).value>limit)||(!minimize&&candidates.get(i).value>=limit))){
+            if((minimize && candidates.get(i).value<=limit)||(!minimize&&candidates.get(i).value>=limit)){
                 rcl[limitIndex] = i;
                 limitIndex++;
             }
@@ -205,8 +205,8 @@ public abstract class GRASPConstructive implements IConstructive {
         int nodeA;
         int nodeB;
         float distance;
-        float max = 0x3f3f3f;
-        float min = 0;
+        float max = 0;
+        float min = 0x3f3f3f;
         float sum = 0;
         int solElementsSize = sol.getElements().size();
         for(int i=0; i<solElementsSize;i++){
@@ -217,8 +217,8 @@ public abstract class GRASPConstructive implements IConstructive {
                 distance=instance.getDistances()[nodeA][nodeB];
                 sum+= distance;
             }
-            if(sum < max) max = sum;
-            if(sum > min) min = sum;
+            if(sum > max) max = sum;
+            if(sum < min) min = sum;
         }
 
 
@@ -235,8 +235,8 @@ public abstract class GRASPConstructive implements IConstructive {
             for(int j = 0; j < solElementsSize; j++){
                 sum+=instance.getDistances()[candidate.element][sol.getElements().get(j)];
             }
-            if(sum < max) max = sum;
-            if(sum > min) min = sum;
+            if(sum > max) max = sum;
+            if(sum < min) min = sum;
             minDiff = max-min;
             setCandidateValue(candidate, minDiff);
         }

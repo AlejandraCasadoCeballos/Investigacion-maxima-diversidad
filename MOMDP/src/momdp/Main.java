@@ -36,7 +36,7 @@ public class Main {
     private static String instanceFolderPath;
 
     public final static boolean DEBUG = false;
-    private static IConstructive constructive =new GRASPConstructive_Criterion1();
+    private static IConstructive constructive =new GRASPConstructive_Criterion3();
 
     public static void main(String[] args){
 
