@@ -17,6 +17,7 @@ public abstract class Pareto {
     }
 
     public static void add(Solution solution){
+        solution.calculateMetrics();
         int i = 0;
         int size = front.size();
         Solution frontSol;

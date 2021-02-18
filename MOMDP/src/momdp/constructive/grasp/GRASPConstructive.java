@@ -2,115 +2,117 @@ package momdp.constructive.grasp;
 
 import momdp.Main;
 import momdp.constructive.IConstructive;
-import momdp.structure.Instance;
-import momdp.structure.Pareto;
-import momdp.structure.RandomManager;
-import momdp.structure.Solution;
+import momdp.structure.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public abstract class GRASPConstructive implements IConstructive {
 
     protected class Candidate{
-        private int element;
-        private float value;
+        public int element;
+        public float value;
 
         public Candidate(int element){
             this.element=element;
         }
-
-        public int getElement() {
-            return element;
-        }
-
-        public float getValue() {
-            return value;
-        }
-
-        public void setValue(float value) {
-            this.value = value;
-        }
     }
 
-    protected List<Integer> solElements;
+    //protected List<Integer> solElements;
     protected List<Candidate> candidates;
     protected float gmax;
     protected float gmin;
     protected Instance instance;
     protected boolean minimize = true;
+    protected Solution sol;
+    protected int solIndex = 0;
+    protected int[] constructives = new int[]{0,1,2,3};
 
-
-
+    private int[] rcl;
 
     public void solve(Instance instance, int numSolutions){
         this.instance = instance;
-        solElements=new ArrayList<>(instance.getNumNodesSol());
+        rcl = new int[instance.getNumNodes()];
         candidates=new ArrayList<>(instance.getNumNodes());
         Random rnd= RandomManager.getRandom();
-        float limit;
+
+
         int limitIndex=0;
         int selectedNode;
-        for(int j=0;j<numSolutions;j++){
+        Candidate removedCandidate;
+
+        //Solution sol;
+        for(solIndex=0;solIndex<numSolutions;solIndex++){
+            float alpha = Main.getAlpha();
+
             //reset sol count
+            sol = new Solution(instance);
             selectedNode= rnd.nextInt(instance.getNumNodes());
+
+
             for (int i=0; i<instance.getNumNodes();i++) {
                 if(i!=selectedNode){
                     candidates.add(new Candidate(i));
                 }
             }
-            solElements.add(selectedNode);
-            while(solElements.size()<instance.getNumNodesSol()){
 
+            sol.getElements().add(selectedNode);
+            while(sol.getElements().size()<instance.getNumNodesSol()){
+                gmin = 0;
+                gmax = 0x3f3f3f;
                 objectiveFunction();
-                //TODO: Cambiado el sort para simplificar
-                candidates.sort((o1, o2) -> Float.compare(o1.getValue(), o2.getValue()));
+                limitIndex = findLimitIndexPerformant(alpha);
 
-                gmax = candidates.get(candidates.size()-1).getValue();
-                gmin = candidates.get(0).getValue();
 
-                limit = minimize ? gmin+Main.alpha*(gmax-gmin) : gmax-Main.alpha*(gmax-gmin);
-                for(int i=0; i<candidates.size();i++){
-                    if((minimize && candidates.get(i).getValue()>limit)||(!minimize&&candidates.get(i).getValue()>=limit)){
-                        limitIndex=i;
-                        break;
-                    }
-                }
-                int bound = minimize ? limitIndex : candidates.size() - limitIndex;
-                int aux= rnd.nextInt(bound);
-                selectedNode = minimize ? aux : limitIndex + aux;
+                //Select node performant
+                selectedNode = rcl[rnd.nextInt(limitIndex)];
 
-                solElements.add(candidates.get(selectedNode).getElement());
+                //Add to solution
+                removedCandidate = candidates.get(selectedNode);
+                sol.getElements().add(removedCandidate.element);
                 candidates.remove(selectedNode);
             }
-            Pareto.add(new Solution(instance,solElements));
+            Pareto.add(sol);
             reset();
         }
     }
 
+    private void setCandidateValue(Candidate candidate, float value){
+        candidate.value = value;
+        if(value > gmax) gmax = value;
+        if(value < gmin) gmin = value;
+    }
+
+    private int findLimitIndexPerformant(float alpha){
+        int limitIndex = 0;
+        //maxLimit = 0;
+
+        int candidatesSize = candidates.size();
+        float limit = minimize ? gmin+alpha*(gmax-gmin) : gmax-alpha*(gmax-gmin);
+        for(int i = 0; i < candidatesSize; i++){
+            if(!((minimize && candidates.get(i).value>limit)||(!minimize&&candidates.get(i).value>=limit))){
+                rcl[limitIndex] = i;
+                limitIndex++;
+            }
+        }
+        return limitIndex;
+    }
+
     protected void reset(){
-        solElements.clear();
         candidates.clear();
     }
 
-    protected void objectiveFunction(){
-        //calcular gmin
-        //calcular gmax
-        //recalcular valores de cada candidato
-        //ordenar la lista de candidatos
-    }
+    protected abstract void objectiveFunction();
 
     protected void maxSumFunction(){
         int nodeA;
         int nodeB;
         float distance;
         float maxSum = 0;
-        int solElementsSize = solElements.size();
+        int solElementsSize = sol.getElements().size();
         for(int i=0; i<solElementsSize;i++){
-            nodeA=solElements.get(i);
+            nodeA=sol.getElements().get(i);
             for(int j=0; j<solElementsSize;j++){
-                nodeB=solElements.get(j);
+                nodeB=sol.getElements().get(j);
                 distance=instance.getDistances()[nodeA][nodeB];
                 if(j>i){ //triangular, evitar pares repetidos
                     //maxSum
@@ -126,9 +128,9 @@ public abstract class GRASPConstructive implements IConstructive {
             sum = 0;
             candidate = candidates.get(i);
             for(int j = 0; j < solElementsSize; j++){
-                sum+=instance.getDistances()[candidate.getElement()][solElements.get(j)];
+                sum+=instance.getDistances()[candidate.element][sol.getElements().get(j)];
             }
-            candidate.setValue(maxSum+sum);
+            setCandidateValue(candidate, maxSum+sum);
         }
     }
 
@@ -136,12 +138,12 @@ public abstract class GRASPConstructive implements IConstructive {
         int nodeA;
         int nodeB;
         float distance;
-        float maxMin = Float.MAX_VALUE;
-        int solElementsSize = solElements.size();
+        float maxMin = 0x3f3f3f;
+        int solElementsSize = sol.getElements().size();
         for(int i=0; i<solElementsSize;i++){
-            nodeA=solElements.get(i);
+            nodeA=sol.getElements().get(i);
             for(int j=0; j<solElementsSize;j++){
-                nodeB=solElements.get(j);
+                nodeB=sol.getElements().get(j);
                 distance=instance.getDistances()[nodeA][nodeB];
                 if(j>i && distance < maxMin){ //triangular, evitar pares repetidos
                     maxMin = distance;
@@ -156,12 +158,12 @@ public abstract class GRASPConstructive implements IConstructive {
             candidate = candidates.get(i);
             maxMin = oldMaxMin;
             for(int j = 0; j < solElementsSize; j++){
-                distance = instance.getDistances()[candidate.getElement()][solElements.get(j)];
+                distance = instance.getDistances()[candidate.element][sol.getElements().get(j)];
                 if(distance < maxMin){
                     maxMin = distance;
                 }
             }
-            candidate.setValue(maxMin);
+            setCandidateValue(candidate, maxMin);
         }
     }
 
@@ -169,14 +171,14 @@ public abstract class GRASPConstructive implements IConstructive {
         int nodeA;
         int nodeB;
         float distance;
-        float maxMinSum = Float.MAX_VALUE;
+        float maxMinSum = 0x3f3f3f;
         float sum = 0;
-        int solElementsSize = solElements.size();
+        int solElementsSize = sol.getElements().size();
         for(int i=0; i<solElementsSize;i++){
-            nodeA=solElements.get(i);
+            nodeA=sol.getElements().get(i);
             sum = 0;
             for(int j=0; j<solElementsSize;j++){
-                nodeB=solElements.get(j);
+                nodeB=sol.getElements().get(j);
                 distance=instance.getDistances()[nodeA][nodeB];
                 sum+= distance;
             }
@@ -192,10 +194,10 @@ public abstract class GRASPConstructive implements IConstructive {
             maxMinSum = oldMaxMinSum;
             candidate = candidates.get(i);
             for(int j = 0; j < solElementsSize; j++){
-                sum+=instance.getDistances()[candidate.getElement()][solElements.get(j)];
+                sum+=instance.getDistances()[candidate.element][sol.getElements().get(j)];
             }
             if(sum < maxMinSum) maxMinSum = sum;
-            candidate.setValue(maxMinSum);
+            setCandidateValue(candidate, maxMinSum);
         }
     }
 
@@ -203,15 +205,15 @@ public abstract class GRASPConstructive implements IConstructive {
         int nodeA;
         int nodeB;
         float distance;
-        float max = Float.MAX_VALUE;
-        float min = Float.MIN_VALUE;
+        float max = 0x3f3f3f;
+        float min = 0;
         float sum = 0;
-        int solElementsSize = solElements.size();
+        int solElementsSize = sol.getElements().size();
         for(int i=0; i<solElementsSize;i++){
-            nodeA=solElements.get(i);
+            nodeA=sol.getElements().get(i);
             sum = 0;
             for(int j=0; j<solElementsSize;j++){
-                nodeB=solElements.get(j);
+                nodeB=sol.getElements().get(j);
                 distance=instance.getDistances()[nodeA][nodeB];
                 sum+= distance;
             }
@@ -231,12 +233,12 @@ public abstract class GRASPConstructive implements IConstructive {
             min = oldMin;
             candidate = candidates.get(i);
             for(int j = 0; j < solElementsSize; j++){
-                sum+=instance.getDistances()[candidate.getElement()][solElements.get(j)];
+                sum+=instance.getDistances()[candidate.element][sol.getElements().get(j)];
             }
             if(sum < max) max = sum;
             if(sum > min) min = sum;
             minDiff = max-min;
-            candidate.setValue(minDiff);
+            setCandidateValue(candidate, minDiff);
         }
     }
 
@@ -246,28 +248,30 @@ public abstract class GRASPConstructive implements IConstructive {
         int nodeA;
         int nodeB;
         float distance;
-        float minPCenter = Float.MIN_VALUE;
+        float minPCenter = 0;
         Candidate c;
 
-        int solElementsSize = solElements.size();
-        for (int k = 0; k < candidates.size(); k++) {
+        int solElementsSize = sol.getElements().size();
+        int candidatesSize = candidates.size();
+        for (int k = 0; k < candidatesSize; k++) {
             c = candidates.get(k);
             candidates.remove(k);
-            solElements.add(c.getElement());
+            sol.getElements().add(c.element);
 
-            for(int i = 0; i < candidates.size(); i++){
-                nodeA = candidates.get(i).getElement();
-                minDist = Float.MAX_VALUE;
-                for(int j = 0; j < solElements.size(); j++){
-                    nodeB = solElements.get(j);
+            for(int i = 0; i < candidatesSize-1; i++){
+                nodeA = candidates.get(i).element;
+                minDist = 0x3f3f3f;
+                int auxSize = sol.getElements().size();
+                for(int j = 0; j < auxSize; j++){
+                    nodeB = sol.getElements().get(j);
                     distance = instance.getDistances()[nodeA][nodeB];
                     if(distance < minDist) minDist = distance;
                 }
                 if(minDist > minPCenter) minPCenter = minDist;
             }
             candidates.add(c);
-            solElements.remove(solElementsSize);
-            c.setValue(minPCenter);
+            sol.getElements().remove(solElementsSize);
+            c.value = (minPCenter);
         }
     }
 

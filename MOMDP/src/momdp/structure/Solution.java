@@ -2,6 +2,7 @@ package momdp.structure;
 
 import momdp.Main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
@@ -14,14 +15,15 @@ public class Solution {
     private float minDiff;
     private float minPCenter;
 
-    /*
-    TODO: anadir los elementos uno a uno en lugar de todos juntos
-     */
-    public Solution(Instance instance, List<Integer> solElements){
+    public Solution(Instance instance/*, List<Integer> solElements*/){
         this.instance = instance;
-        this.solElements = solElements;
+        this.solElements = new ArrayList<Integer>(instance.getNumNodesSol());
         if(Main.DEBUG) print();
-        calculateMetrics();
+
+    }
+
+    public List<Integer> getElements(){
+        return solElements;
     }
 
     private void print(){
@@ -32,8 +34,7 @@ public class Solution {
         System.out.println();
     }
 
-    protected void calculateMetrics(){
-        // TODO: No utilizar los valores limites porque pueden producir overflow
+    public void calculateMetrics(){
         maxSum=0;
         maxMin=0x3f3f3f;
         maxMinSum=0x3f3f3f;

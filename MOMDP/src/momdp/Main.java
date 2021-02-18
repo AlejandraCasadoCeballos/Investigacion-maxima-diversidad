@@ -21,7 +21,8 @@ public class Main {
 
     public final static int seed = 13;
     public final static int numSolutions = 100;
-    public static float alpha=0.3f;
+    static float alpha=0.3f;
+    static boolean randomAlpha = true;
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
@@ -35,7 +36,7 @@ public class Main {
     private static String instanceFolderPath;
 
     public final static boolean DEBUG = false;
-    private static IConstructive constructive =new GRASPConstructive_MO();
+    private static IConstructive constructive =new GRASPConstructive_Criterion1();
 
     public static void main(String[] args){
 
@@ -43,6 +44,9 @@ public class Main {
         String constructivePath=createSolFolder();
         float instanceCount = instances.size();
         int i = 0;
+        //TODO: guardar en un csv el tiempo de cada instancia
+        long currentTime = System.currentTimeMillis();
+
         for (Instance instance:instances) {
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
@@ -51,6 +55,13 @@ public class Main {
             Pareto.saveToFile(constructivePath, instance);
             i++;
         }
+
+        long elapsed = System.currentTimeMillis() - currentTime;
+        System.out.println("Time: " + elapsed/1000f+"s");
+    }
+
+    public static float getAlpha(){
+        return randomAlpha ? RandomManager.getRandom().nextFloat() : alpha;
     }
 
     private static void readData(){
