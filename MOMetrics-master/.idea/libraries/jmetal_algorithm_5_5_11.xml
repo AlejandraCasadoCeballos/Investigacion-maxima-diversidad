@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="jmetal-algorithm-5.5.11">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../jmetal-algorithm-5.5.1.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jmetal-algorithm-5.5.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
