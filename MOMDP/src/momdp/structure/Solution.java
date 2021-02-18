@@ -14,6 +14,9 @@ public class Solution {
     private float minDiff;
     private float minPCenter;
 
+    /*
+    TODO: anadir los elementos uno a uno en lugar de todos juntos
+     */
     public Solution(Instance instance, List<Integer> solElements){
         this.instance = instance;
         this.solElements = solElements;
@@ -29,24 +32,25 @@ public class Solution {
         System.out.println();
     }
 
-
     protected void calculateMetrics(){
+        // TODO: No utilizar los valores limites porque pueden producir overflow
         maxSum=0;
-        maxMin=Float.MAX_VALUE;
-        maxMinSum=Float.MAX_VALUE;
-        minPCenter = Float.MIN_VALUE;
+        maxMin=0x3f3f3f;
+        maxMinSum=0x3f3f3f;
+        minPCenter = 0;
 
         int nodeA;
         int nodeB;
         float distance;
         float sum;
 
-        float minDiffAux = Float.MIN_VALUE;
+        float minDiffAux = 0;
 
-        for(int i=0; i<instance.getNumNodesSol();i++){
+        int numNodesSol = instance.getNumNodesSol();
+        for(int i=0; i<numNodesSol;i++){
             nodeA=solElements.get(i);
             sum=0;
-            for(int j=0; j<instance.getNumNodesSol();j++){
+            for(int j=0; j<numNodesSol;j++){
                 nodeB=solElements.get(j);
                 distance=instance.getDistances()[nodeA][nodeB];
                 if(j>i){ //triangular, evitar pares repetidos
@@ -73,10 +77,11 @@ public class Solution {
 
         //Min P Center
         float minDist;
-        for(int i = 0; i < instance.getNumNodes(); i++){
+        int numNodes = instance.getNumNodes();
+        for(int i = 0; i < numNodes; i++){
             nodeA = i;
-            minDist = Float.MAX_VALUE;
-            for(int j = 0; j < instance.getNumNodesSol(); j++){
+            minDist = 0x3f3f3f;
+            for(int j = 0; j < numNodesSol; j++){
                 if(j != i){
                     nodeB = solElements.get(j);
                     distance = instance.getDistances()[nodeA][nodeB];

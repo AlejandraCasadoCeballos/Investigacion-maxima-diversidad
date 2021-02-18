@@ -42,6 +42,8 @@ public abstract class GRASPConstructive implements IConstructive {
     protected boolean minimize = true;
 
 
+
+
     public void solve(Instance instance, int numSolutions){
         this.instance = instance;
         solElements=new ArrayList<>(instance.getNumNodesSol());
@@ -62,12 +64,9 @@ public abstract class GRASPConstructive implements IConstructive {
             while(solElements.size()<instance.getNumNodesSol()){
 
                 objectiveFunction();
+                //TODO: Cambiado el sort para simplificar
+                candidates.sort((o1, o2) -> Float.compare(o1.getValue(), o2.getValue()));
 
-                candidates.sort((o1, o2) -> {
-                    if(o1.getValue() < o2.getValue()) return -1;
-                    if(o1.getValue() > o2.getValue()) return 1;
-                    return 0;
-                });
                 gmax = candidates.get(candidates.size()-1).getValue();
                 gmin = candidates.get(0).getValue();
 

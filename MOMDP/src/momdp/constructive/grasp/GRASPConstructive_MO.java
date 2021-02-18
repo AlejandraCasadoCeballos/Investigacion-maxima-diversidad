@@ -1,8 +1,7 @@
 package momdp.constructive.grasp;
 
 public class GRASPConstructive_MO extends GRASPConstructive {
-
-
+    
     public GRASPConstructive_MO(){
         minimize = true;
     }
@@ -27,5 +26,6 @@ public class GRASPConstructive_MO extends GRASPConstructive {
         }
 
         func = (func+1)%5;
+        //func = (func+1)%4;
     }
 }

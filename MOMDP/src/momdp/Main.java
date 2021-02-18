@@ -28,7 +28,7 @@ public class Main {
     private final static boolean readAllInstances = true;
 
     private final static String folderIndex = "preliminar";
-    private final static String instanceIndex = "SOM-b_2_n100_m20.txt";
+    private final static String instanceIndex = "GKD-b_24_n100_m10.txt";
 
     private static List<String> foldersNames;
     private static List<String> instancesNames;
