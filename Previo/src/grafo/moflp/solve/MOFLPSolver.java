@@ -39,8 +39,8 @@ public class MOFLPSolver {
             long timeIni = System.currentTimeMillis();
             NondominatedPopulation result = new Executor()
                     .withProblemClass(MOMDPProblem.class, path)
-                    .withAlgorithm("NSGAII")
-                    .withMaxEvaluations(250) //250000
+                    .withAlgorithm("NSGAIII")
+                    .withMaxEvaluations(250000) //250000
                     .withProperty("populationSize", 500)
                     .run();
             double secs = (System.currentTimeMillis()-timeIni)/1000.0;
@@ -49,8 +49,8 @@ public class MOFLPSolver {
             for (int i = 0; i < result.size(); i++) {
                 Solution sol = result.get(i);
                 double[] obj = sol.getObjectives();
-                System.out.print("Solution "+(i+1)+": "+obj[0]+" "+(obj[1])+" "+obj[2]+" "+obj[3]+" "+obj[4]+" ");
-                pwPareto.println(obj[0]+" "+(obj[1])+" "+obj[2]+" "+obj[3]+" "+obj[4]);
+                System.out.print("Solution "+(i+1)+": "+(-obj[0])+" "+(-obj[1])+" "+(-obj[2])+" "+obj[3]+" "+obj[4]+" ");
+                pwPareto.println((-obj[0])+" "+(-obj[1])+" "+(-obj[2])+" "+obj[3]+" "+obj[4]);
                 System.out.println();
             }
             pw.println(secs);

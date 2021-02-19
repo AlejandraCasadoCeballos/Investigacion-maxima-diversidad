@@ -7,6 +7,8 @@ import org.moeaframework.core.variable.EncodingUtils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ public class MOMDPProblem implements Problem {
     private int n;
     private int m;
     private Integer[] candidates;
-    private float[][] distances;
+    private double[][] distances;
 
 
     public MOMDPProblem(String path) {
@@ -33,7 +35,7 @@ public class MOMDPProblem implements Problem {
             String[] tokens = line.split("\\s+");
             n = Integer.parseInt(tokens[0]);
             m = Integer.parseInt(tokens[1]);
-            distances = new float[n][n];
+            distances = new double[n][n];
             candidates = new Integer[n];
             for(int i = 0; i < n; i++) candidates[i] = i;
 
@@ -41,7 +43,7 @@ public class MOMDPProblem implements Problem {
                 tokens = line.split("\\s+");
                 int nodeA = Integer.parseInt(tokens[0]);
                 int nodeB = Integer.parseInt(tokens[1]);
-                float dist = Float.parseFloat(tokens[2]);
+                double dist = Double.parseDouble(tokens[2]);
                 distances[nodeA][nodeB] = dist;
                 distances[nodeB][nodeA] = dist;
             }
@@ -82,10 +84,10 @@ public class MOMDPProblem implements Problem {
 
         int nodeA;
         int nodeB;
-        float distance;
-        float sum;
+        double distance;
+        double sum;
 
-        float minDiffAux = 0;
+        double minDiffAux = 0;
 
         int numNodesSol = m;
         for(int i=0; i<numNodesSol;i++){
@@ -117,7 +119,7 @@ public class MOMDPProblem implements Problem {
         minDiff = minDiffAux-maxMinSum;
 
         //Min P Center
-        float minDist;
+        double minDist;
         int numNodes = n;
         for(int i = 0; i < numNodes; i++){
             nodeA = i;
@@ -132,11 +134,26 @@ public class MOMDPProblem implements Problem {
             if(minDist > minPCenter) minPCenter = minDist;
         }
 
-        solution.setObjective(0, maxSum);
-        solution.setObjective(1, maxMin);
-        solution.setObjective(2, maxMinSum);
+        solution.setObjective(0, -maxSum);
+        solution.setObjective(1, -maxMin);
+        solution.setObjective(2, -maxMinSum);
         solution.setObjective(3, minDiff);
         solution.setObjective(4, minPCenter);
+
+        /*solution.setObjective(0, ((int)(-maxSum*100f))   /100f);
+        solution.setObjective(1, ((int)(-maxMin*100f))   /100f);
+        solution.setObjective(2, ((int)(-maxMinSum*100f))/100f);
+        solution.setObjective(3, ((int)(minDiff*100f))   /100f);
+        solution.setObjective(4, ((int)(minPCenter*100f))/100f);*/
+
+        /*DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.FLOOR);
+
+        solution.setObjective(0, -Double.parseDouble(df.format(maxSum).replace(',','.')));
+        solution.setObjective(1, -Double.parseDouble(df.format(maxMin).replace(',','.')));
+        solution.setObjective(2, -Double.parseDouble(df.format(maxMinSum).replace(',','.')));
+        solution.setObjective(3, Double.parseDouble(df.format(minDiff).replace(',','.')));
+        solution.setObjective(4, Double.parseDouble(df.format(minPCenter).replace(',','.')));*/
         solution.setConstraint(0, repeated);
     }
 
