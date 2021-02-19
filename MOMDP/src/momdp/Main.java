@@ -20,7 +20,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int numSolutions = 250;
+    public final static int numSolutions = 1000;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
 
