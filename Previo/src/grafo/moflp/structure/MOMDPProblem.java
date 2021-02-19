@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MOFLPProblem implements Problem {
+public class MOMDPProblem implements Problem {
 
     private String name;
     private int m;
@@ -24,7 +24,7 @@ public class MOFLPProblem implements Problem {
     private float[][] distance;
 
 
-    public MOFLPProblem(String path) {
+    public MOMDPProblem(String path) {
         super();
         load(path);
     }
@@ -68,7 +68,7 @@ public class MOFLPProblem implements Problem {
 
     @Override
     public String getName() {
-        return "MOFLP";
+        return "MOMDP";
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MOFLPProblem implements Problem {
 
     @Override
     public int getNumberOfObjectives() {
-        return 3;
+        return 5;
     }
 
     @Override
