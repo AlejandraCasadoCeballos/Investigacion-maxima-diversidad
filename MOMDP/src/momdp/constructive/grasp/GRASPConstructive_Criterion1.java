@@ -14,7 +14,8 @@ public class GRASPConstructive_Criterion1 extends GRASPConstructive {
 
     @Override
     protected void objectiveFunction() {
-        int constructive = constructives[solIndex/timesPerConstructive];
+        int constructive = constructives[solIndex/timesPerConstructive % constructives.length];
+
         switch (constructive){
             case 0: maxSumFunction(); break;
             case 1: maxMinFunction(); break;

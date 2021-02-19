@@ -3,25 +3,20 @@ package grafo.moflp.structure;
 import org.moeaframework.core.Problem;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.EncodingUtils;
-import org.moeaframework.problem.AbstractProblem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class MOMDPProblem implements Problem {
 
     private String name;
-    private int m;
     private int n;
-    private int p;
-    private int r;
-    private Candidate[] candidates;
-    private Demand[] demands;
-    private float[][] distance;
+    private int m;
+    private Integer[] candidates;
+    private float[][] distances;
 
 
     public MOMDPProblem(String path) {
@@ -30,39 +25,28 @@ public class MOMDPProblem implements Problem {
     }
 
     private void load(String path) {
-        try {
-            name = path.substring(path.lastIndexOf('/')+1);
-            BufferedReader bf = new BufferedReader(new FileReader(path));
-            String[] tokens = bf.readLine().split("\\s+");
-            m = Integer.parseInt(tokens[0]);
-            n = Integer.parseInt(tokens[1]);
-            p = Integer.parseInt(tokens[2]);
-            r = Integer.parseInt(tokens[3]);
-            candidates = new Candidate[m];
-            for (int i = 0; i < m; i++) {
-                tokens = bf.readLine().split("\\s+");
-                candidates[i] = new Candidate(Double.parseDouble(tokens[0]),Double.parseDouble(tokens[1]));
+        name = path.substring(path.lastIndexOf('/')+1);
+        try(BufferedReader bf = new BufferedReader(new FileReader(path));) {
+
+            String line;
+            line = bf.readLine();
+            String[] tokens = line.split("\\s+");
+            n = Integer.parseInt(tokens[0]);
+            m = Integer.parseInt(tokens[1]);
+            distances = new float[n][n];
+            candidates = new Integer[n];
+            for(int i = 0; i < n; i++) candidates[i] = i;
+
+            while((line = bf.readLine()) != null){
+                tokens = line.split("\\s+");
+                int nodeA = Integer.parseInt(tokens[0]);
+                int nodeB = Integer.parseInt(tokens[1]);
+                float dist = Float.parseFloat(tokens[2]);
+                distances[nodeA][nodeB] = dist;
+                distances[nodeB][nodeA] = dist;
             }
-            demands = new Demand[n];
-            for (int i = 0; i < n; i++) {
-                tokens = bf.readLine().split("\\s+");
-                demands[i] = new Demand(Double.parseDouble(tokens[0]),Double.parseDouble(tokens[1]), Float.parseFloat(tokens[2]));
-            }
-            evalDistances();
-            bf.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void evalDistances() {
-        distance = new float[m][n];
-        for (int i = 0; i < m; i++) {
-            Candidate c = candidates[i];
-            for (int j = 0; j < n; j++) {
-                Demand d = demands[j];
-                distance[i][j] = (float) Math.sqrt(Math.pow(c.x-d.x,2)+Math.pow(c.y-d.y,2));
-            }
         }
     }
 
@@ -73,7 +57,7 @@ public class MOMDPProblem implements Problem {
 
     @Override
     public int getNumberOfVariables() {
-        return p;
+        return m;
     }
 
     @Override
@@ -88,67 +72,91 @@ public class MOMDPProblem implements Problem {
 
     @Override
     public void evaluate(Solution solution) {
-        double[] facilities = EncodingUtils.getReal(solution);
-        double pmp = 0;
-        double mclp = 0;
-        double pcp = 0;
-//        if (isFeasible(facilities) > 0) {
-//            solution.setObjective(0, Integer.MAX_VALUE);
-//            solution.setObjective(1, Integer.MAX_VALUE);
-//            solution.setObjective(2, Integer.MAX_VALUE);
-//            solution.setConstraint(0, 1);
-//        } else {
+        int[] facilities = EncodingUtils.getInt(solution);
+        double maxSum = 0;
+        double maxMin = 0x3f3f3f;
+        double maxMinSum = 0x3f3f3f;
+        double minDiff = 0;
+        double minPCenter = 0;
         int repeated = isFeasible(facilities);
-            for (int d = 0; d < n; d++) {
-                Demand demand = demands[d];
-                float distToClosest = distanceToClosest(facilities, d);
-                // pMP
-                pmp += demand.w * distToClosest;
-                // MCLP
-                if (distToClosest <= r) {
-                    mclp += demand.w;
+
+        int nodeA;
+        int nodeB;
+        float distance;
+        float sum;
+
+        float minDiffAux = 0;
+
+        int numNodesSol = m;
+        for(int i=0; i<numNodesSol;i++){
+            nodeA=facilities[i];
+            sum=0;
+            for(int j=0; j<numNodesSol;j++){
+                nodeB=facilities[j];
+                distance=distances[nodeA][nodeB];
+                if(j>i){ //triangular, evitar pares repetidos
+                    //maxSum
+                    maxSum+=distance;
+
+                    //maxMin
+                    if(distance<maxMin){
+                        maxMin=distance;
+                    }
                 }
-                // pCP
-                pcp = (distToClosest > pcp) ? distToClosest : pcp;
+                sum+=distance;
             }
-            pmp /= n;
-            solution.setObjective(0, pmp);
-            solution.setObjective(1, -mclp);
-            solution.setObjective(2, pcp);
-            solution.setConstraint(0, repeated);
-//        }
+            //maxMinSum
+            if(sum<maxMinSum){
+                maxMinSum=sum;
+            }
+            //minDiff
+            if(sum > minDiffAux){
+                minDiffAux = sum;
+            }
+        }
+        minDiff = minDiffAux-maxMinSum;
+
+        //Min P Center
+        float minDist;
+        int numNodes = n;
+        for(int i = 0; i < numNodes; i++){
+            nodeA = i;
+            minDist = 0x3f3f3f;
+            for(int j = 0; j < numNodesSol; j++){
+                if(j != i){
+                    nodeB = facilities[j];
+                    distance = distances[nodeA][nodeB];
+                    if(distance < minDist) minDist = distance;
+                }
+            }
+            if(minDist > minPCenter) minPCenter = minDist;
+        }
+
+        solution.setObjective(0, maxSum);
+        solution.setObjective(1, maxMin);
+        solution.setObjective(2, maxMinSum);
+        solution.setObjective(3, minDiff);
+        solution.setObjective(4, minPCenter);
+        solution.setConstraint(0, repeated);
     }
 
-    private int isFeasible(double[] facilites) {
+    private int isFeasible(int[] facilities) {
         int repeated = 0;
         Set<Integer> selected = new HashSet<>();
-        for (double facility : facilites) {
-            int f = (int) Math.floor(facility);
-            if (selected.contains(f)) {
+        for (int facility : facilities) {
+            if (selected.contains(facility)) {
                 repeated++;
             }
-            selected.add(f);
+            selected.add(facility);
         }
         return repeated;
     }
 
-    private float distanceToClosest(double[] facilities, int d) {
-        float minDist = Float.MAX_VALUE;
-        for (double fac : facilities) {
-            int f = (int) Math.floor(fac);
-            float dist = distance[f][d];
-            if (dist < minDist) {
-                minDist = dist;
-            }
-        }
-        return minDist;
-    }
-
     @Override
     public Solution newSolution() {
-        Solution solution = new Solution(p, 3, 1);
-        for (int i = 0; i < p; i++) {
-            solution.setVariable(i, EncodingUtils.newReal(1, candidates.length));
+        Solution solution = new Solution(m, 5, 1);
+        for (int i = 0; i < m; i++) {
+            solution.setVariable(i, EncodingUtils.newInt(0, n-1));
         }
         return solution;
     }

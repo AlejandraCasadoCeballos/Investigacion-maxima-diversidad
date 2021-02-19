@@ -20,7 +20,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int numSolutions = 100;
+    public final static int numSolutions = 250;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
 
@@ -36,7 +36,7 @@ public class Main {
     private static String instanceFolderPath;
 
     public final static boolean DEBUG = false;
-    private static IConstructive constructive =new GRASPConstructive_Criterion3();
+    private static IConstructive constructive =new GRASPConstructive_Criterion1();
 
     public static void main(String[] args){
 
