@@ -26,6 +26,7 @@ public class Solution {
         Solution sol = new Solution(instance);
         for(Integer i : solElements)
             sol.getElements().add(i);
+
         return sol;
     }
 

@@ -39,10 +39,10 @@ public class Main {
 
     public final static boolean DEBUG = false;
     private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
-       new LS_Swap(),
+       //new LS_Swap(),
     });
     private final static VNS vns = new VNS(new LS_Swap());
-    private final static boolean useVNS = false;
+    private final static boolean useVNS = true;
 
     public static void main(String[] args){
         readData();
@@ -57,7 +57,7 @@ public class Main {
             RandomManager.setSeed(seed);
             Pareto.reset(numSolutions);
             constructive.solve(instance, numSolutions);
-            if(useVNS) vns.solve();
+            if(useVNS) vns.solve(instance);
             Pareto.saveToFile(constructivePath, instance);
             i++;
         }

@@ -49,7 +49,7 @@ public abstract class Pareto {
                 break;
             } else i++;
         }
-        if(enter)front.add(solution);
+        if(enter)front.add(solution.clone()); //TODO:HEMOS CAMBIADO ESTO, ahora pasamos clone y no la referencia
         return enter;
     }
 

@@ -20,6 +20,8 @@ public class LS_Swap implements ILocalSearch {
 
         boolean anyImprovement = false;
 
+        //TODO:HACER SHUFFLE DE LOS ELEMENTOS DE LA LISTA DE SELECCIONADOS Y NO SELECCIONADOS
+
         while(!solutionsToImprove.isEmpty()){ //Mientras haya soluciones parciales a mejorar
             boolean improvement=false;
             sol = solutionsToImprove.remove();
