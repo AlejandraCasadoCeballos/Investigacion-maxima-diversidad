@@ -16,7 +16,7 @@ public abstract class Pareto {
         front = new ArrayList<>(numSolutions);
     }
 
-    public static void add(Solution solution){
+    public static boolean add(Solution solution){
         solution.calculateMetrics();
         int i = 0;
         int size = front.size();
@@ -41,6 +41,7 @@ public abstract class Pareto {
             } else i++;
         }
         if(enter)front.add(solution);
+        return enter;
     }
 
     public static void saveToFile(String path, Instance instance){

@@ -72,6 +72,7 @@ public abstract class GRASPConstructive implements IConstructive {
                 candidates.remove(selectedNode);
             }
             Pareto.add(sol);
+            //llamar a la busqueda local
             reset();
         }
     }

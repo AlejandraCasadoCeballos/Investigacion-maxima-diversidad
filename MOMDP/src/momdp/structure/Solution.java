@@ -22,7 +22,7 @@ public class Solution {
 
     }
 
-    public Solution Clone(){
+    public Solution clone(){
         Solution sol = new Solution(instance);
         for(Integer i : solElements)
             sol.getElements().add(i);
@@ -126,5 +126,13 @@ public class Solution {
 
     public float getMinPCenter() {
         return minPCenter;
+    }
+
+    public Instance getInstance() {
+        return instance;
+    }
+
+    public List<Integer> getSolElements() {
+        return solElements;
     }
 }
