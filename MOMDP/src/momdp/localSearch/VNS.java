@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class VNS{
 
-    private final int kMax = 5;
+    public final int kMax = 5;
     private final ILocalSearch localSearchObj;
 
 
@@ -34,18 +34,22 @@ public class VNS{
         }
     }
 
-    public Solution shake(Solution sol, int k){
+    private Solution shake(Solution sol, int k){
         sol = sol.clone();
         Random rnd = RandomManager.getRandom();
         int numNodes = sol.getInstance().getNumNodes();
         int numNodesSol = sol.getInstance().getNumNodesSol();
-        List<Integer> nonSelected = new ArrayList<>(numNodes - numNodesSol);
+        int diff = numNodes - numNodesSol;
+        List<Integer> nonSelected = new ArrayList<>(diff);
         for(int i = 0; i < numNodes; i++){
             if(!sol.getElements().contains(i)){
                 nonSelected.add(i);
             }
         }
-        for(int i = 0; i < k; i++){
+
+        int max = Math.min(diff, k);
+
+        for(int i = 0; i < max; i++){
             int selected = rnd.nextInt(numNodesSol);
             int unselected = rnd.nextInt(numNodes-numNodesSol-i);
             sol.getSolElements().remove(selected);

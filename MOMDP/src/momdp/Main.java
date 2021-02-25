@@ -29,10 +29,10 @@ public class Main {
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
-    private final static boolean readAllInstances = true;
+    private final static boolean readAllInstances = false;
 
     private final static String folderIndex = "preliminar";
-    private final static String instanceIndex = "GKD-b_24_n100_m10.txt";
+    private final static String instanceIndex = "GKD-a_47_n15_m12.txt";
 
     private static List<String> instancesNames;
     private static String instanceFolderPath;
@@ -87,7 +87,7 @@ public class Main {
     }
 
     public static String createSolFolder(){
-        String path=pathSolFolder+"/"+constructive.getName();
+        String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.kMax : "");
         File file =new File(path);
         if(!file.exists()){
             boolean bool = file.mkdir();
