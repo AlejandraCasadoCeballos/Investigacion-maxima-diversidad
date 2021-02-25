@@ -68,4 +68,9 @@ public abstract class Pareto {
     public static List<Solution> getFront() {
         return front;
     }
+    public static List<Solution> getFrontCopy(){
+        List<Solution> aux = new ArrayList<>(front.size());
+        for(Solution s : front) aux.add(s.clone());
+        return aux;
+    }
 }

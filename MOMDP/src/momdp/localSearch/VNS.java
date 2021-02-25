@@ -24,7 +24,8 @@ public class VNS{
         while(k < kMax){
             boolean shakeImprove=false;
             boolean lsImprove=false;
-            for(Solution sol : Pareto.getFront()){
+            List<Solution> frontCopy = Pareto.getFrontCopy();
+            for(Solution sol : frontCopy){
                 sol=shake(sol,k);
                 shakeImprove = shakeImprove || Pareto.add(sol);
                 lsImprove = lsImprove || localSearchObj.localSearchSolution(sol);
