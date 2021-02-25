@@ -29,7 +29,7 @@ public class Main {
 
     private final static boolean readFromInput = false;
     private final static boolean readAllFolders = false;
-    private final static boolean readAllInstances = false;
+    private final static boolean readAllInstances = true;
 
     private final static String folderIndex = "preliminar";
     private final static String instanceIndex = "GKD-a_47_n15_m12.txt";
@@ -39,10 +39,10 @@ public class Main {
 
     public final static boolean DEBUG = false;
     private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
-       new LS_Swap(),
+       //new LS_Swap(),
     });
     private final static VNS vns = new VNS(new LS_Swap());
-    private final static boolean useVNS = true;
+    private final static boolean useVNS = false;
 
     public static void main(String[] args){
         readData();

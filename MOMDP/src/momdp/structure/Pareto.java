@@ -21,23 +21,28 @@ public abstract class Pareto {
         boolean enter = true;
         while(i < size){
             frontSol = front.get(i);
-            boolean betterMaxSum = solution.getMaxSum() >= frontSol.getMaxSum();
+            /*boolean betterMaxSum = solution.getMaxSum() >= frontSol.getMaxSum();
             boolean betterMaxMin = solution.getMaxMin() >= frontSol.getMaxMin();
             boolean betterMaxMinSum = solution.getMaxMinSum() >= frontSol.getMaxMinSum();
             boolean betterMinDiff = solution.getMinDiff() <= frontSol.getMinDiff();
-            boolean betterMinPCenter = solution.getMinPCenter() <= frontSol.getMinPCenter();
+            boolean betterMinPCenter = solution.getMinPCenter() <= frontSol.getMinPCenter();*/
+            boolean anyBetter = solution.getMaxSum() > frontSol.getMaxSum() ||
+                    solution.getMaxMin() > frontSol.getMaxMin() ||
+                    solution.getMaxMinSum() > frontSol.getMaxMinSum() ||
+                    solution.getMinDiff() < frontSol.getMinDiff() ||
+                    solution.getMinPCenter() < frontSol.getMinPCenter();
 
-            boolean someWorse = solution.getMaxSum() <= frontSol.getMaxSum() ||
-                    solution.getMaxMin() <= frontSol.getMaxMin() ||
-                    solution.getMaxMinSum() <= frontSol.getMaxMinSum() ||
-                    solution.getMinDiff() >= frontSol.getMinDiff() ||
-                    solution.getMinPCenter() >= frontSol.getMinPCenter();
+            boolean anyWorse = solution.getMaxSum() < frontSol.getMaxSum() ||
+                    solution.getMaxMin() < frontSol.getMaxMin() ||
+                    solution.getMaxMinSum() < frontSol.getMaxMinSum() ||
+                    solution.getMinDiff() > frontSol.getMinDiff() ||
+                    solution.getMinPCenter() > frontSol.getMinPCenter();
 
-            if(someWorse){
+            if(anyWorse || !anyBetter){
                 //dominada
                 enter = false;
                 break;
-            } else if (betterMaxSum && betterMaxMin && betterMaxMinSum && betterMinDiff && betterMinPCenter){
+            } else if (anyBetter){
                 //domina a la solution actual
                 front.remove(i);
                 size--;
