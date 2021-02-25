@@ -2,6 +2,7 @@ package momdp.constructive.grasp;
 
 import momdp.Main;
 import momdp.constructive.IConstructive;
+import momdp.localSearch.ILocalSearch;
 import momdp.structure.*;
 
 import java.util.*;
@@ -72,7 +73,7 @@ public abstract class GRASPConstructive implements IConstructive {
                 candidates.remove(selectedNode);
             }
             Pareto.add(sol);
-            //llamar a la busqueda local
+            for(ILocalSearch ls: localSearchObjs) ls.localSearchSolution(sol);
             reset();
         }
     }

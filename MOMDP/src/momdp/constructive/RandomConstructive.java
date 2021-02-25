@@ -1,6 +1,6 @@
 package momdp.constructive;
 
-import momdp.Main;
+
 import momdp.structure.Instance;
 import momdp.structure.Pareto;
 import momdp.structure.RandomManager;
@@ -11,7 +11,6 @@ import java.util.*;
 public class RandomConstructive implements IConstructive {
 
     public void solve(Instance instance, int numSolutions) {
-        //List<Integer> solElements = new ArrayList<>(instance.getNumNodesSol());
         Solution sol;
         Random rnd= RandomManager.getRandom();
         int numRandom;

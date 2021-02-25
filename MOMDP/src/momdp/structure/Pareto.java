@@ -1,6 +1,5 @@
 package momdp.structure;
 
-import momdp.Main;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,8 +8,6 @@ import java.util.List;
 public abstract class Pareto {
 
     private static List<Solution> front;
-
-    private static boolean modifiedSinceLastAsk = false;
 
     public static void reset(int numSolutions){
         front = new ArrayList<>(numSolutions);
@@ -30,7 +27,13 @@ public abstract class Pareto {
             boolean betterMinDiff = solution.getMinDiff() <= frontSol.getMinDiff();
             boolean betterMinPCenter = solution.getMinPCenter() <= frontSol.getMinPCenter();
 
-            if(!betterMaxSum && !betterMaxMin && !betterMaxMinSum && !betterMinDiff && !betterMinPCenter){
+            boolean someWorse = solution.getMaxSum() <= frontSol.getMaxSum() ||
+                    solution.getMaxMin() <= frontSol.getMaxMin() ||
+                    solution.getMaxMinSum() <= frontSol.getMaxMinSum() ||
+                    solution.getMinDiff() >= frontSol.getMinDiff() ||
+                    solution.getMinPCenter() >= frontSol.getMinPCenter();
+
+            if(someWorse){
                 //dominada
                 enter = false;
                 break;
@@ -58,9 +61,5 @@ public abstract class Pareto {
 
     public static List<Solution> getFront() {
         return front;
-    }
-
-    public static boolean isModifiedSinceLastAsk() {
-        return modifiedSinceLastAsk;
     }
 }

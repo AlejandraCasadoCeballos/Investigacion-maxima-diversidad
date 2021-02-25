@@ -3,6 +3,9 @@ package momdp;
 
 import momdp.constructive.*;
 import momdp.constructive.grasp.*;
+import momdp.localSearch.ILocalSearch;
+import momdp.localSearch.LS_Swap;
+import momdp.localSearch.VNS;
 import momdp.structure.Instance;
 import momdp.structure.Pareto;
 import momdp.structure.RandomManager;
@@ -20,7 +23,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int numSolutions = 1000;
+    public final static int numSolutions = 100;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
 
@@ -31,15 +34,17 @@ public class Main {
     private final static String folderIndex = "preliminar";
     private final static String instanceIndex = "GKD-b_24_n100_m10.txt";
 
-    private static List<String> foldersNames;
     private static List<String> instancesNames;
     private static String instanceFolderPath;
 
     public final static boolean DEBUG = false;
-    private static IConstructive constructive =new GRASPConstructive_Criterion1();
+    private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
+       new LS_Swap(),
+    });
+    private final static VNS vns = new VNS(new LS_Swap());
+    private final static boolean useVNS = true;
 
     public static void main(String[] args){
-
         readData();
         String constructivePath=createSolFolder();
         float instanceCount = instances.size();
@@ -47,11 +52,14 @@ public class Main {
         //TODO: guardar en un csv el tiempo de cada instancia
         long currentTime = System.currentTimeMillis();
 
+        //addLocalSearch();
+
         for (Instance instance:instances) {
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
             Pareto.reset(numSolutions);
             constructive.solve(instance, numSolutions);
+            if(useVNS) vns.solve();
             Pareto.saveToFile(constructivePath, instance);
             i++;
         }
@@ -66,7 +74,7 @@ public class Main {
 
     private static void readData(){
         instances = new ArrayList<>();
-        foldersNames = Arrays.asList(new File(pathFolder).list());
+        List<String> foldersNames = Arrays.asList(new File(pathFolder).list());
 
         if(readFromInput){
             readInstanceFromInput();

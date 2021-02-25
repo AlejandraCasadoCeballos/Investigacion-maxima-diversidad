@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Solution {
 
-    private Instance instance;
+    private final Instance instance;
     protected List<Integer> solElements;
     private float maxSum;
     private float maxMin;

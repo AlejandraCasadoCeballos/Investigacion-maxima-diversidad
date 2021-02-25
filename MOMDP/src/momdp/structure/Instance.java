@@ -7,8 +7,8 @@ import java.text.DecimalFormatSymbols;
 
 public class Instance {
 
-    private String name;
-    private String path;
+    private final String name;
+    private final String path;
     private int numNodes;
     private int numNodesSol;
     private float[][] distances;
@@ -68,9 +68,9 @@ public class Instance {
         System.out.println("\nDISTANCE MATRIX OF " + name);
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setDecimalSeparator('.');
-        String zeros = "";
+        StringBuilder zeros = new StringBuilder();
         int numZeros = (""+(int)maxDistance).length();
-        for(int i = 0; i < numZeros; i++) zeros += '0';
+        zeros.append("0".repeat(numZeros));
 
         for(float[] row : distances){
             for(float value : row){
