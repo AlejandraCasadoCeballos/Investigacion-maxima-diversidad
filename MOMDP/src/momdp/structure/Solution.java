@@ -22,6 +22,13 @@ public class Solution {
 
     }
 
+    public Solution Clone(){
+        Solution sol = new Solution(instance);
+        for(Integer i : solElements)
+            sol.getElements().add(i);
+        return sol;
+    }
+
     public List<Integer> getElements(){
         return solElements;
     }
