@@ -38,14 +38,15 @@ public abstract class Pareto {
                     solution.getMinDiff() > frontSol.getMinDiff() ||
                     solution.getMinPCenter() > frontSol.getMinPCenter();
 
-            if(anyWorse || !anyBetter){
-                //dominada
-                enter = false;
-                break;
-            } else if (anyBetter){
+
+            if(anyBetter && !anyWorse){
                 //domina a la solution actual
                 front.remove(i);
                 size--;
+            } else if(!anyBetter){
+                //dominada
+                enter = false;
+                break;
             } else i++;
         }
         if(enter)front.add(solution);
