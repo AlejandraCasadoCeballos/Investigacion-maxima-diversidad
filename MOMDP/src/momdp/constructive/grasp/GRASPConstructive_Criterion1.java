@@ -9,11 +9,11 @@ public class GRASPConstructive_Criterion1 extends GRASPConstructive {
     public GRASPConstructive_Criterion1(){
         super();
         minimize = false;
-        timesPerConstructive = Main.numSolutions / constructives.length;
     }
 
     @Override
     protected void objectiveFunction() {
+        timesPerConstructive = Main.numSolutions / constructives.length;
         int constructive = constructives[solIndex/timesPerConstructive % constructives.length];
 
         switch (constructive){

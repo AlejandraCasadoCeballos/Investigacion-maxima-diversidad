@@ -11,8 +11,8 @@ import java.util.Random;
 
 public class VNS{
 
-    private float kMax = 30; //porcentajes
-    private float kStep = 5;
+    private final float kMax = 30; //porcentajes
+    private final float kStep = 5;
     private final ILocalSearch localSearchObj;
 
     public VNS(ILocalSearch ls){
@@ -20,12 +20,12 @@ public class VNS{
     }
 
     public void solve(Instance instance){
-        kStep=(kStep/100)*instance.getNumNodesSol();
-        kMax=(kMax/100)*instance.getNumNodesSol();
+        float kStepLocal=(kStep/100)*instance.getNumNodesSol();
+        float kMaxLocal=(kMax/100)*instance.getNumNodesSol();
 
-        float k = kStep;
+        float k = kStepLocal;
 
-        while(k < kMax){
+        while(k < kMaxLocal){
             boolean shakeImprove=false;
             boolean lsImprove=false;
             List<Solution> frontCopy = Pareto.getFrontCopy();
@@ -35,7 +35,7 @@ public class VNS{
                 lsImprove = lsImprove || localSearchObj.localSearchSolution(sol);
             }
             if(lsImprove || shakeImprove) k=1;
-            else k+=kStep;
+            else k+=kStepLocal;
         }
     }
 
@@ -51,7 +51,8 @@ public class VNS{
                 unselectedNodes.add(i);
             }
         }
-        k=(int)Math.ceil(k);
+        k=Math.min((int)Math.ceil(k),diff);
+
 
         for(int i = 0; i < k; i++){
             int selected = rnd.nextInt(numNodesSol);
@@ -66,5 +67,9 @@ public class VNS{
 
     public float getkMax() {
         return kMax;
+    }
+
+    public float getkStep() {
+        return kStep;
     }
 }

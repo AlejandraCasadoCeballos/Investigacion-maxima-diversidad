@@ -23,11 +23,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int[] executions = new int[]{
-        100,
-        200,
-        300
-    };
+    public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
     public static int numSolutions = 0;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
@@ -37,7 +33,7 @@ public class Main {
     private final static boolean readAllInstances = true;
 
     private final static String folderIndex = "preliminar";
-    private final static String instanceIndex = "GKD-c_1_n500_m50.txt";
+    private final static String instanceIndex = "GKD-a_47_n15_m12.txt";
 
     private static List<String> instancesNames;
     private static String instanceFolderPath;
@@ -47,15 +43,13 @@ public class Main {
        //new LS_Swap(),
     });
     private final static VNS vns = new VNS(new LS_Swap());
-    private final static boolean useVNS = false;
+    private final static boolean useVNS = true;
 
     public static void main(String[] args){
         readData();
         float instanceCount = instances.size();
         int i = 0;
         //TODO: guardar en un csv el tiempo de cada instancia
-
-
 
         long currentTime = System.currentTimeMillis();
 
@@ -68,8 +62,8 @@ public class Main {
             int count = 0;
             for(int j = 0; j < executions.length; j++){
                 numSolutions = executions[j];
-                count += executions[j];
                 constructive.solve(instance, executions[j]-count);
+                count = executions[j];
                 if(useVNS) vns.solve(instance);
                 Pareto.saveToFile(createSolFolder(), instance);
             }
@@ -100,7 +94,7 @@ public class Main {
     }
 
     public static String createSolFolder(){
-        String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax() : "");
+        String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax()+"_KStep_"+vns.getkStep() : "");
         File file =new File(path);
         if(!file.exists()){
             boolean bool = file.mkdir();

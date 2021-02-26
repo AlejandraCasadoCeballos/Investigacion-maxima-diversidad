@@ -117,8 +117,18 @@ public class TestMOMDP_Final {
         String[] paths = new String[]{
                 "previo",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_200",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_300",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_400",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_500",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_600",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_800",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_900",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_1000",
+
+                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
+                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
         };
         boolean[] minimizing = new boolean[]{false, false, false, true, true};
