@@ -65,9 +65,11 @@ public class Main {
             RandomManager.setSeed(seed);
 
             numSolutions = 0;
+            int count = 0;
             for(int j = 0; j < executions.length; j++){
                 numSolutions = executions[j];
-                constructive.solve(instance, executions[j]-numSolutions);
+                count += executions[j];
+                constructive.solve(instance, executions[j]-count);
                 if(useVNS) vns.solve(instance);
                 Pareto.saveToFile(createSolFolder(), instance);
             }
