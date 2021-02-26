@@ -2,10 +2,10 @@ package momdp.localSearch;
 
 import momdp.structure.Instance;
 import momdp.structure.Pareto;
+import momdp.structure.RandomManager;
 import momdp.structure.Solution;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.*;
 
 public class LS_Swap implements ILocalSearch {
 
@@ -20,26 +20,38 @@ public class LS_Swap implements ILocalSearch {
 
         boolean anyImprovement = false;
 
-        //TODO:HACER SHUFFLE DE LOS ELEMENTOS DE LA LISTA DE SELECCIONADOS Y NO SELECCIONADOS
+        int diff = numNodes-numNodesSol;
+        List<Integer> unselectedNodes = new ArrayList<>(diff);
+        for(int i = 0; i < numNodes; i++){
+            if(!sol.getElements().contains(i)){
+                unselectedNodes.add(i);
+            }
+        }
+        Random rnd = RandomManager.getRandom();
+        Collections.shuffle(unselectedNodes, rnd);
+        Collections.shuffle(sol.getSolElements(), rnd);
 
         while(!solutionsToImprove.isEmpty()){ //Mientras haya soluciones parciales a mejorar
             boolean improvement=false;
             sol = solutionsToImprove.remove();
             for(int i=0;i<numNodesSol;i++){
-                for(int j=0; j<numNodes; j++){
-                    if(!sol.getSolElements().contains(j)){
-                        int aux = sol.getSolElements().remove(i);
-                        sol.getSolElements().add(j);
-                        if(Pareto.add(sol)){
-                            solutionsToImprove.add(sol.clone());
-                            improvement=true;
-                            anyImprovement = true;
-                            if(firstImprovement) break;
-                        }
-                        if(!firstImprovement){
-                            sol.getSolElements().remove(numNodesSol-1);
-                            sol.getSolElements().add(aux);
-                        }
+                for(int j=0; j<diff; j++){
+                    int unselectedNode = unselectedNodes.remove(j);
+                    int selectedNode = sol.getSolElements().remove(i);
+                    unselectedNodes.add(selectedNode);
+                    sol.getSolElements().add(unselectedNode);
+
+                    if(Pareto.add(sol)){
+                        solutionsToImprove.add(sol.clone());
+                        improvement=true;
+                        anyImprovement = true;
+                        if(firstImprovement) break;
+                    }
+                    if(!firstImprovement){
+                        sol.getSolElements().remove(numNodesSol-1);
+                        sol.getSolElements().add(selectedNode);
+                        unselectedNodes.remove(diff-1);
+                        unselectedNodes.add(unselectedNode);
                     }
                 }
                 if(firstImprovement && improvement) break;

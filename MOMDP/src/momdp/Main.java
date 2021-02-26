@@ -23,7 +23,12 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int numSolutions = 100;
+    public final static int[] executions = new int[]{
+        100,
+        200,
+        300
+    };
+    public static int numSolutions = 0;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
 
@@ -42,7 +47,7 @@ public class Main {
        //new LS_Swap(),
     });
     private final static VNS vns = new VNS(new LS_Swap());
-    private final static boolean useVNS = true;
+    private final static boolean useVNS = false;
 
     public static void main(String[] args){
         readData();
@@ -50,15 +55,26 @@ public class Main {
         float instanceCount = instances.size();
         int i = 0;
         //TODO: guardar en un csv el tiempo de cada instancia
+
+
+
         long currentTime = System.currentTimeMillis();
 
         for (Instance instance:instances) {
+            Pareto.reset(numSolutions);
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
-            Pareto.reset(numSolutions);
-            constructive.solve(instance, numSolutions);
-            if(useVNS) vns.solve(instance);
-            Pareto.saveToFile(constructivePath, instance);
+
+            numSolutions = 0;
+            for(int j = 0; j < executions.length; j++){
+                numSolutions = executions[j]-numSolutions;
+                constructive.solve(instance, numSolutions);
+                if(useVNS) vns.solve(instance);
+                Pareto.saveToFile(constructivePath, instance);
+            }
+
+
+
             i++;
         }
 
@@ -85,7 +101,7 @@ public class Main {
     }
 
     public static String createSolFolder(){
-        String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.kMax : "");
+        String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax() : "");
         File file =new File(path);
         if(!file.exists()){
             boolean bool = file.mkdir();

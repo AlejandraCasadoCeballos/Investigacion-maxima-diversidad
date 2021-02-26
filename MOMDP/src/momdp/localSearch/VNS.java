@@ -11,10 +11,9 @@ import java.util.Random;
 
 public class VNS{
 
-    public float kMax = 30; //porcentajes
+    private float kMax = 30; //porcentajes
     private float kStep = 5;
     private final ILocalSearch localSearchObj;
-
 
     public VNS(ILocalSearch ls){
         localSearchObj=ls;
@@ -46,10 +45,10 @@ public class VNS{
         int numNodes = instance.getNumNodes();
         int numNodesSol = instance.getNumNodesSol();
         int diff = numNodes - numNodesSol;
-        List<Integer> nonSelected = new ArrayList<>(diff);
+        List<Integer> unselectedNodes = new ArrayList<>(diff);
         for(int i = 0; i < numNodes; i++){
             if(!sol.getElements().contains(i)){
-                nonSelected.add(i);
+                unselectedNodes.add(i);
             }
         }
         k=(int)Math.ceil(k);
@@ -58,11 +57,14 @@ public class VNS{
             int selected = rnd.nextInt(numNodesSol);
             int unselected = rnd.nextInt(diff-i);
             sol.getSolElements().remove(selected);
-            sol.getSolElements().add(nonSelected.get(unselected));
-            nonSelected.remove(unselected);
+            sol.getSolElements().add(unselectedNodes.get(unselected));
+            unselectedNodes.remove(unselected);
         }
 
         return sol;
     }
 
+    public float getkMax() {
+        return kMax;
+    }
 }

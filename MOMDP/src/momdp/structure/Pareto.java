@@ -21,11 +21,6 @@ public abstract class Pareto {
         boolean enter = true;
         while(i < size){
             frontSol = front.get(i);
-            /*boolean betterMaxSum = solution.getMaxSum() >= frontSol.getMaxSum();
-            boolean betterMaxMin = solution.getMaxMin() >= frontSol.getMaxMin();
-            boolean betterMaxMinSum = solution.getMaxMinSum() >= frontSol.getMaxMinSum();
-            boolean betterMinDiff = solution.getMinDiff() <= frontSol.getMinDiff();
-            boolean betterMinPCenter = solution.getMinPCenter() <= frontSol.getMinPCenter();*/
             boolean anyBetter = solution.getMaxSum() > frontSol.getMaxSum() ||
                     solution.getMaxMin() > frontSol.getMaxMin() ||
                     solution.getMaxMinSum() > frontSol.getMaxMinSum() ||
@@ -38,7 +33,6 @@ public abstract class Pareto {
                     solution.getMinDiff() > frontSol.getMinDiff() ||
                     solution.getMinPCenter() > frontSol.getMinPCenter();
 
-
             if(anyBetter && !anyWorse){
                 //domina a la solution actual
                 front.remove(i);
@@ -49,7 +43,7 @@ public abstract class Pareto {
                 break;
             } else i++;
         }
-        if(enter)front.add(solution.clone()); //TODO:HEMOS CAMBIADO ESTO, ahora pasamos clone y no la referencia
+        if(enter)front.add(solution.clone());
         return enter;
     }
 

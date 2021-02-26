@@ -26,6 +26,11 @@ public class Solution {
         Solution sol = new Solution(instance);
         for(Integer i : solElements)
             sol.getElements().add(i);
+        sol.maxMin= maxMin;
+        sol.maxSum=maxSum;
+        sol.maxMinSum = maxMinSum;
+        sol.minDiff = minDiff;
+        sol.minPCenter = minPCenter;
 
         return sol;
     }

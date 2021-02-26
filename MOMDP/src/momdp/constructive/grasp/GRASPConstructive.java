@@ -63,7 +63,6 @@ public abstract class GRASPConstructive implements IConstructive {
                 objectiveFunction();
                 limitIndex = findLimitIndexPerformant(alpha);
 
-
                 //Select node performant
                 selectedNode = rcl[rnd.nextInt(limitIndex)];
 
