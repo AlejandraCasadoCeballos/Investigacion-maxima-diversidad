@@ -66,8 +66,8 @@ public class Main {
 
             numSolutions = 0;
             for(int j = 0; j < executions.length; j++){
-                numSolutions = executions[j]-numSolutions;
-                constructive.solve(instance, numSolutions);
+                numSolutions = executions[j];
+                constructive.solve(instance, executions[j]-numSolutions);
                 if(useVNS) vns.solve(instance);
                 Pareto.saveToFile(createSolFolder(), instance);
             }
