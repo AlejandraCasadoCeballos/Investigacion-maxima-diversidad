@@ -51,7 +51,6 @@ public class Main {
 
     public static void main(String[] args){
         readData();
-        String constructivePath=createSolFolder();
         float instanceCount = instances.size();
         int i = 0;
         //TODO: guardar en un csv el tiempo de cada instancia
@@ -70,10 +69,8 @@ public class Main {
                 numSolutions = executions[j]-numSolutions;
                 constructive.solve(instance, numSolutions);
                 if(useVNS) vns.solve(instance);
-                Pareto.saveToFile(constructivePath, instance);
+                Pareto.saveToFile(createSolFolder(), instance);
             }
-
-
 
             i++;
         }
