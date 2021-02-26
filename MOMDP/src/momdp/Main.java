@@ -24,7 +24,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int[] executions = new int[]{100,200,300,400,500,600,700,800,900,1000};
+    public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
     public static int numSolutions = 0;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
@@ -41,7 +41,7 @@ public class Main {
 
     public final static boolean DEBUG = false;
     private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
-       //new LS_Swap(),
+       new LS_Swap(),
     });
     private final static ILocalSearch[] localSearchForPareto = new ILocalSearch[]{
         //new LS_Swap(),
@@ -71,7 +71,8 @@ public class Main {
                 numSolutions = executions[j];
                 constructive.solve(instance, executions[j]-count);
                 for(ILocalSearch ls : localSearchForPareto){
-                    for(Solution s : Pareto.getFront()){
+                    List<Solution> solutions = Pareto.getFrontCopy();
+                    for(Solution s : solutions){
                         ls.localSearchSolution(s);
                     }
                 }
@@ -89,7 +90,7 @@ public class Main {
         System.out.println("Times:");
         int currentCount = 0;
         for(int j = 0; j < times.length; j++){
-            System.out.println("Time of " + executions[j] + ": " + (currentCount+ times[j]));
+            System.out.println(currentCount+ times[j]);
             currentCount += times[j];
         }
     }
@@ -115,7 +116,7 @@ public class Main {
     public static String createSolFolder(){
         String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax()+"_KStep_"+vns.getkStep() : "");
         if(localSearchForPareto.length > 0){
-            path += ":LSforPareto_";
+            path += "_LSforPareto";
         }
         for(ILocalSearch ls : localSearchForPareto){
             path+= "_" + ls.getClass().getSimpleName();
