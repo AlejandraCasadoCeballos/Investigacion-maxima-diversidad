@@ -29,7 +29,7 @@ public abstract class GRASPConstructive implements IConstructive {
     protected int[] constructives = new int[]{0,1,2,3};
 
     private int[] rcl;
-    //TODO: guardar datos de pareto con 100 sol, 200, 300..hasta 1000
+
     public void solve(Instance instance, int numSolutions){
         this.instance = instance;
         rcl = new int[instance.getNumNodes()];

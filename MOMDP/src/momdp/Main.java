@@ -9,6 +9,7 @@ import momdp.localSearch.VNS;
 import momdp.structure.Instance;
 import momdp.structure.Pareto;
 import momdp.structure.RandomManager;
+import momdp.structure.Solution;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
+    public final static int[] executions = new int[]{100,200,300,400,500,600,700,800,900,1000};
     public static int numSolutions = 0;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
@@ -42,8 +43,11 @@ public class Main {
     private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
        //new LS_Swap(),
     });
+    private final static ILocalSearch[] localSearchForPareto = new ILocalSearch[]{
+        //new LS_Swap(),
+    };
     private final static VNS vns = new VNS(new LS_Swap());
-    private final static boolean useVNS = true;
+    private final static boolean useVNS = false;
 
     public static void main(String[] args){
         readData();
@@ -53,6 +57,8 @@ public class Main {
 
         long currentTime = System.currentTimeMillis();
 
+        long[] times = new long[executions.length];
+
         for (Instance instance:instances) {
             Pareto.reset(numSolutions);
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
@@ -61,10 +67,17 @@ public class Main {
             numSolutions = 0;
             int count = 0;
             for(int j = 0; j < executions.length; j++){
+                long instanceTime = System.currentTimeMillis();
                 numSolutions = executions[j];
                 constructive.solve(instance, executions[j]-count);
+                for(ILocalSearch ls : localSearchForPareto){
+                    for(Solution s : Pareto.getFront()){
+                        ls.localSearchSolution(s);
+                    }
+                }
                 count = executions[j];
                 if(useVNS) vns.solve(instance);
+                times[j] += (System.currentTimeMillis() - instanceTime);
                 Pareto.saveToFile(createSolFolder(), instance);
             }
 
@@ -72,7 +85,13 @@ public class Main {
         }
 
         long elapsed = System.currentTimeMillis() - currentTime;
-        System.out.println("Time: " + elapsed/1000f+"s");
+        System.out.println("Total time: " + elapsed/1000f+"s");
+        System.out.println("Times:");
+        int currentCount = 0;
+        for(int j = 0; j < times.length; j++){
+            System.out.println("Time of " + executions[j] + ": " + (currentCount+ times[j]));
+            currentCount += times[j];
+        }
     }
 
     public static float getAlpha(){
@@ -95,6 +114,12 @@ public class Main {
 
     public static String createSolFolder(){
         String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax()+"_KStep_"+vns.getkStep() : "");
+        if(localSearchForPareto.length > 0){
+            path += ":LSforPareto_";
+        }
+        for(ILocalSearch ls : localSearchForPareto){
+            path+= "_" + ls.getClass().getSimpleName();
+        }
         File file =new File(path);
         if(!file.exists()){
             boolean bool = file.mkdir();
