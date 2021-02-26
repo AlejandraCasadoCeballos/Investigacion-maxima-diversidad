@@ -115,10 +115,10 @@ public class TestMOMDP_Final {
     public static void evaluateDir() throws FileNotFoundException {
         String pathGlobal = "../MOMDP/pareto";
         String[] paths = new String[]{
-                "previo",
+                //"previo",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
+                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
         };
         boolean[] minimizing = new boolean[]{false, false, false, true, true};
