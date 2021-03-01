@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4360259f-41b1-4f17-bb07-b82459f5b79b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Docs importantes/previoVSCriterio1De100a1000.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Docs importantes/previoVSCriterio1De100a1000.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Docs importantes/lsTodosVSlsPareto.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Docs importantes/lsTodosVSlsPareto.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/GKD-a_19_n10_m6_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/GKD-a_19_n10_m6_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/GKD-a_32_n15_m4_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/GKD-a_32_n15_m4_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/GKD-a_47_n15_m12_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/GKD-a_47_n15_m12_reference.txt" afterDir="false" />
@@ -29,12 +29,10 @@
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_28_n100_m30_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_28_n100_m30_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_33_n125_m12_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_33_n125_m12_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_49_n150_m45_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_49_n150_m45_reference.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_5_n25_m2_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-a_5_n25_m2_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_11_n300_m90_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_11_n300_m90_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_14_n400_m80_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_14_n400_m80_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_2_n100_m20_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_2_n100_m20_reference.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_8_n200_m80_reference.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/pareto/jmetal/SOM-b_8_n200_m80_reference.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MOMDP/src/momdp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MOMDP/src/momdp/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

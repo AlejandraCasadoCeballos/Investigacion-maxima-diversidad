@@ -116,7 +116,7 @@ public class TestMOMDP_Final {
         String pathGlobal = "../MOMDP/pareto";
         String[] paths = new String[]{
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
+                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap",
                 /*"previo",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100",
