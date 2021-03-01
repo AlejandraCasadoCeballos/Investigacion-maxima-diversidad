@@ -9,8 +9,8 @@ import java.util.*;
 
 public class LS_Swap implements ILocalSearch {
 
-    private final int selectedPct = 50;
-    private final int unselectedPct = 50;
+    private final int selectedPct = 30;
+    private final int unselectedPct = 20;
 
     public boolean localSearchSolution(Solution sol){
         sol=sol.clone();
@@ -29,13 +29,13 @@ public class LS_Swap implements ILocalSearch {
         List<ElemDist> unselectedNodes = new ArrayList<>(diff);
         for(int i = 0; i < numNodes; i++){
             if(!sol.getElements().contains(i)){
-                unselectedNodes.add(new ElemDist(i,minDistToSelected(i, sol.getSolElements(), instance)));
+                unselectedNodes.add(new ElemDist(i, minDistToSelected(i, sol.getSolElements(), instance)));
             }
         }
         Collections.sort(unselectedNodes, (a,b)->Float.compare(b.dist, a.dist));
         List<ElemDist> selectedNodes = new ArrayList<>(numNodesSol);
         for(int i : sol.getSolElements()){
-            selectedNodes.add(new ElemDist(i, maxDistToSelected(i,sol.getSolElements(),instance)));
+            selectedNodes.add(new ElemDist(i, maxDistToSelected(i, sol.getSolElements(), instance)));
         }
         Collections.sort(selectedNodes, (a,b)->Float.compare(a.dist, b.dist));
 
@@ -108,7 +108,7 @@ public class LS_Swap implements ILocalSearch {
         return anyImprovement;
     }
 
-    private class ElemDist{
+    private static class ElemDist{
         public int node;
         public float dist;
 
