@@ -28,6 +28,7 @@ public class MOFLPSolver {
 
         String[] fileNames = new File(dir).list((dir1, name) -> name.endsWith(".txt"));
         PrintWriter pw = new PrintWriter("momdp_moea.csv");
+        double totalTime=0;
         for (String fileName : fileNames) {
             System.out.print(fileName+"\t");
             pw.print(fileName.replace(".txt","")+";");
@@ -43,8 +44,8 @@ public class MOFLPSolver {
                     .withMaxEvaluations(250000) //250000
                     .withProperty("populationSize", 500)
                     .run();
-            double secs = (System.currentTimeMillis()-timeIni)/1000.0;
-
+            double millisecs = (System.currentTimeMillis()-timeIni);
+            totalTime+=millisecs;
             PrintWriter pwPareto = new PrintWriter(outDir+"/"+fileName);
             for (int i = 0; i < result.size(); i++) {
                 Solution sol = result.get(i);
@@ -53,10 +54,11 @@ public class MOFLPSolver {
                 pwPareto.println((-obj[0])+" "+(-obj[1])+" "+(-obj[2])+" "+obj[3]+" "+obj[4]);
                 System.out.println();
             }
-            pw.println(secs);
-            System.out.println(result.size()+"\t"+secs);
+            pw.println(millisecs);
+            System.out.println(result.size()+"\t"+millisecs);
             pwPareto.close();
         }
+        System.out.println(totalTime);
         pw.close();
     }
 }
