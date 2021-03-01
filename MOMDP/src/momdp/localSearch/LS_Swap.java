@@ -9,8 +9,12 @@ import java.util.*;
 
 public class LS_Swap implements ILocalSearch {
 
-    private final int selectedPct = 30;
-    private final int unselectedPct = 20;
+    private final int selectedPct = 100;
+    private final int unselectedPct = 100;
+
+    public String getName(){
+        return getClass().getSimpleName() + "_"+selectedPct+"%_"+unselectedPct+"%";
+    }
 
     public boolean localSearchSolution(Solution sol){
         sol=sol.clone();

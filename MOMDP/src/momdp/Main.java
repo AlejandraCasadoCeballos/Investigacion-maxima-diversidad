@@ -119,7 +119,7 @@ public class Main {
             path += "_LSforPareto";
         }
         for(ILocalSearch ls : localSearchForPareto){
-            path+= "_" + ls.getClass().getSimpleName();
+            path+= "_" + ls.getName();
         }
         File file =new File(path);
         if(!file.exists()){

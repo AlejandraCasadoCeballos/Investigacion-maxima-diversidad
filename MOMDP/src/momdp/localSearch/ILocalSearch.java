@@ -6,5 +6,5 @@ public interface ILocalSearch {
 
     boolean firstImprovement=true;
     boolean localSearchSolution(Solution sol);
-
+    String getName();
 }
