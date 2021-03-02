@@ -25,10 +25,10 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
+    public final static int[] executions = new int[]{100,200,300,400,500,600,700,800,900,1000};
     public final static int[] lsPCTs = new int[]{/*10,20,30,40,50,60,70,80,90,*/100};
     public static int numSolutions = 0;
-    static float alpha=0.0f;
+    static float alpha=1f;
     static boolean randomAlpha = true;
 
     private final static boolean readFromInput = false;
@@ -164,10 +164,10 @@ public class Main {
         } catch (IOException e){
             System.out.println("Error reading line on " + file.getName());
         }
-        System.out.println("Times: ");
+        //System.out.println("Times: ");
         try(PrintWriter pw = new PrintWriter(file.getPath())){
             for(String l : allLines){
-                System.out.println(l);
+                //System.out.println(l);
                 pw.println(l);
             }
         }

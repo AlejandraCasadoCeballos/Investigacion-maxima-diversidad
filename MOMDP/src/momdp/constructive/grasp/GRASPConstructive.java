@@ -26,7 +26,7 @@ public abstract class GRASPConstructive implements IConstructive {
     protected boolean minimize = true;
     protected Solution sol;
     protected int solIndex = 0;
-    protected int[] constructives = new int[]{0,1,2,3,4};
+    protected int[] constructives = new int[]{0,1,2,3};
 
     private int[] rcl;
 

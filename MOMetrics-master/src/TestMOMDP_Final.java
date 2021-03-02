@@ -118,9 +118,14 @@ public class TestMOMDP_Final {
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_OLD",
-                "previo",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_10%_10%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_30%_20%",
+                //"previo",
+                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_0.00",
+                //"GRASPConstructive_Criterion3_Seed_13_SolCount_100_alpha_0.25",
+                //"GRASPConstructive_Criterion3_Seed_13_SolCount_100_alpha_0.50",
+                //"GRASPConstructive_Criterion3_Seed_13_SolCount_100_alpha_0.75",
+                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_1.00",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_random",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_random_sin_PC",
                 /*"previo",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_100",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_200",
@@ -132,7 +137,6 @@ public class TestMOMDP_Final {
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_800",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_900",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_1000",*/
-
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
@@ -141,7 +145,7 @@ public class TestMOMDP_Final {
         String pathJMetal = pathGlobal+"/jmetal";
         new File(pathJMetal).mkdirs();
 
-        try (PrintWriter pw = new PrintWriter("momdp_analysis.csv")) {
+        try (PrintWriter pw = new PrintWriter("analisis.csv")) {
             String matching = "";
             String headers = "INSTANCE";
             for (int i = 0; i < paths.length; i++) {
