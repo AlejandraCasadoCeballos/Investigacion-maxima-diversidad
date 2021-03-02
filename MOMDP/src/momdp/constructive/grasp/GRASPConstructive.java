@@ -272,22 +272,24 @@ public abstract class GRASPConstructive implements IConstructive {
         int candidatesSize = candidates.size();
         for (int k = 0; k < candidatesSize; k++) {
             c = candidates.get(k);
-            candidates.remove(k);
-            sol.getElements().add(c.element);
+            //sol.getElements().add(c.element);
 
-            for(int i = 0; i < candidatesSize-1; i++){
+            for(int i = 0; i < candidatesSize; i++){
+                if(i == k) continue;
                 nodeA = candidates.get(i).element;
                 minDist = 0x3f3f3f;
-                int auxSize = sol.getElements().size();
-                for(int j = 0; j < auxSize; j++){
+                for(int j = 0; j < solElementsSize; j++){
                     nodeB = sol.getElements().get(j);
                     distance = instance.getDistances()[nodeA][nodeB];
                     if(distance < minDist) minDist = distance;
                 }
+                nodeB = c.element;
+                distance = instance.getDistances()[nodeA][nodeB];
+                if(distance < minDist) minDist = distance;
+
                 if(minDist > minPCenter) minPCenter = minDist;
             }
-            candidates.add(c);
-            sol.getElements().remove(solElementsSize);
+            //sol.getElements().remove(solElementsSize);
             setCandidateValue(c, minPCenter);
         }
 

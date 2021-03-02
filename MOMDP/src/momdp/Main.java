@@ -28,7 +28,7 @@ public class Main {
     public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
     public final static int[] lsPCTs = new int[]{/*10,20,30,40,50,60,70,80,90,*/100};
     public static int numSolutions = 0;
-    static float alpha=0.3f;
+    static float alpha=0.0f;
     static boolean randomAlpha = true;
 
     private final static boolean readFromInput = false;
