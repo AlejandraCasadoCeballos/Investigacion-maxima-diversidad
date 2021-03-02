@@ -9,6 +9,8 @@ public class Solution {
 
     private final Instance instance;
     protected List<Integer> solElements;
+    private int objective;
+    private int defeatedBy;
     private float maxSum;
     private float maxMin;
     private float maxMinSum;
@@ -16,6 +18,8 @@ public class Solution {
     private float minPCenter;
 
     public Solution(Instance instance/*, List<Integer> solElements*/){
+        objective = -1;
+        defeatedBy = -1;
         this.instance = instance;
         this.solElements = new ArrayList<Integer>(instance.getNumNodesSol());
         if(Main.DEBUG) print();
@@ -31,6 +35,8 @@ public class Solution {
         sol.maxMinSum = maxMinSum;
         sol.minDiff = minDiff;
         sol.minPCenter = minPCenter;
+        sol.objective = objective;
+        sol.defeatedBy = defeatedBy;
 
         return sol;
     }
@@ -140,5 +146,21 @@ public class Solution {
 
     public List<Integer> getSolElements() {
         return solElements;
+    }
+
+    public int getObjective() {
+        return objective;
+    }
+
+    public void setObjective(int objective) {
+        this.objective = objective;
+    }
+
+    public int getDefeatedBy() {
+        return defeatedBy;
+    }
+
+    public void setDefeatedBy(int defeatedBy) {
+        this.defeatedBy = defeatedBy;
     }
 }

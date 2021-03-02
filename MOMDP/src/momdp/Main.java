@@ -21,11 +21,12 @@ public class Main {
 
     private final static String pathFolder= "./instances";
     private final static String pathSolFolder="./pareto";
+    private final static String pathObjectivesFolder="./objectives";
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
     public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
-    public final static int[] lsPCTs = new int[]{10,20,30,40,50,60,70,80,90,100};
+    public final static int[] lsPCTs = new int[]{/*10,20,30,40,50,60,70,80,90,*/100};
     public static int numSolutions = 0;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
@@ -45,7 +46,7 @@ public class Main {
        //new LS_Swap(),
     });
     private final static ILocalSearch[] localSearchForPareto = new ILocalSearch[]{
-        new LS_Swap(),
+        //new LS_Swap(),
     };
     private final static VNS vns = new VNS(new LS_Swap());
     private final static boolean useVNS = false;
@@ -66,8 +67,8 @@ public class Main {
 
             for(int j = 0; j < executions.length; j++){
                 numSolutions = executions[j];
-                Pareto.reset(numSolutions);
                 for(int w = 0; w < lsPCTs.length; w++){
+                    Pareto.reset(numSolutions);
                     LS_Swap.unselectedPct = lsPCTs[w];
                     LS_Swap.selectedPct = lsPCTs[w];
                     long instanceTime = System.currentTimeMillis();
@@ -82,7 +83,7 @@ public class Main {
                     times[j][w] += (System.currentTimeMillis() - instanceTime);
                     String path = createSolFolder();
                     names[j][w] = path.substring(pathSolFolder.length() +1);
-                    Pareto.saveToFile(path, instance);
+                    Pareto.saveToFile(path, createObjectiveFolder(), instance);
                 }
             }
             i++;
@@ -117,12 +118,7 @@ public class Main {
         long elapsed = System.currentTimeMillis() - currentTime;
         System.out.println("Total time: " + elapsed/1000f+"s");
         saveTimes(times, names);
-        /*System.out.println("Times:");
-        int currentCount = 0;
-        for(int j = 0; j < times.length; j++){
-            System.out.println(currentCount+ times[j]);
-            currentCount += times[j];
-        }*/
+        Pareto.saveTotalObjectives(pathObjectivesFolder);
     }
 
     public static float getAlpha(){
@@ -133,10 +129,6 @@ public class Main {
         File file =new File(pathSolFolder+"/times.csv");
         if(!file.exists()) file.createNewFile();
 
-        /*if(!file.exists()){
-            boolean bool = file.mkdir();
-            if(!bool) System.out.println("Problem creating the folder: "+ constructive.getName());
-        }*/
         List<String> allLines = new ArrayList<>();
         boolean[][] overrideCheck = new boolean[names.length][names[0].length];
 
@@ -213,7 +205,24 @@ public class Main {
         }
 
         return path;
+    }
 
+    public static String createObjectiveFolder(){
+        String path=pathObjectivesFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax()+"_KStep_"+vns.getkStep() : "");
+        if(localSearchForPareto.length > 0){
+            path += "_LSforPareto";
+        }
+        for(ILocalSearch ls : localSearchForPareto){
+            path+= "_" + ls.getName();
+        }
+        path+="_objectives";
+        File file =new File(path);
+        if(!file.exists()){
+            boolean bool = file.mkdir();
+            if(!bool) System.out.println("Problem creating the folder: "+ constructive.getName());
+        }
+
+        return path;
     }
 
     private static void readInstanceFromInput(){

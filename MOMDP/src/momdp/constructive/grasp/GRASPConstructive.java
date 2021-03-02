@@ -26,9 +26,15 @@ public abstract class GRASPConstructive implements IConstructive {
     protected boolean minimize = true;
     protected Solution sol;
     protected int solIndex = 0;
-    protected int[] constructives = new int[]{0,1,2,3};
+    protected int[] constructives = new int[]{0,1,2,3,4};
 
     private int[] rcl;
+
+    public static long maxSumTime;
+    public static long maxMinTime;
+    public static long maxMinSumTime;
+    public static long minDiffTime;
+    public static long minPCenterTime;
 
     public void solve(Instance instance, int numSolutions){
         this.instance = instance;
@@ -105,6 +111,7 @@ public abstract class GRASPConstructive implements IConstructive {
     protected abstract void objectiveFunction();
 
     protected void maxSumFunction(){
+        long initTime = System.currentTimeMillis();
         int nodeA;
         int nodeB;
         float distance;
@@ -133,9 +140,11 @@ public abstract class GRASPConstructive implements IConstructive {
             }
             setCandidateValue(candidate, maxSum+sum);
         }
+        maxSumTime += (System.currentTimeMillis()-initTime);
     }
 
     protected void maxMinFunction(){
+        long initTime = System.currentTimeMillis();
         int nodeA;
         int nodeB;
         float distance;
@@ -166,9 +175,11 @@ public abstract class GRASPConstructive implements IConstructive {
             }
             setCandidateValue(candidate, maxMin);
         }
+        maxMinTime+=(System.currentTimeMillis()-initTime);
     }
 
     protected void maxMinSumFunction(){
+        long initTime = System.currentTimeMillis();
         int nodeA;
         int nodeB;
         float distance;
@@ -200,9 +211,11 @@ public abstract class GRASPConstructive implements IConstructive {
             if(sum < maxMinSum) maxMinSum = sum;
             setCandidateValue(candidate, maxMinSum);
         }
+        maxMinSumTime += (System.currentTimeMillis()-initTime);
     }
 
     protected void minDiffFunction(){
+        long initTime = System.currentTimeMillis();
         int nodeA;
         int nodeB;
         float distance;
@@ -241,10 +254,13 @@ public abstract class GRASPConstructive implements IConstructive {
             minDiff = max-min;
             setCandidateValue(candidate, minDiff);
         }
+
+        minDiffTime += (System.currentTimeMillis()-initTime);
     }
 
     protected void minPCenterFunction(){
         //Min P Center
+        long initTime = System.currentTimeMillis();
         float minDist;
         int nodeA;
         int nodeB;
@@ -272,8 +288,11 @@ public abstract class GRASPConstructive implements IConstructive {
             }
             candidates.add(c);
             sol.getElements().remove(solElementsSize);
-            c.value = (minPCenter);
+            setCandidateValue(c, minPCenter);
         }
+
+        minPCenterTime += (System.currentTimeMillis()-initTime);
+
     }
 
 }

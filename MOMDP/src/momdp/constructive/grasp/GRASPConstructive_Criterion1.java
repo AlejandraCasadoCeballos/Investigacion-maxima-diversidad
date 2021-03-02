@@ -15,7 +15,7 @@ public class GRASPConstructive_Criterion1 extends GRASPConstructive {
     protected void objectiveFunction() {
         timesPerConstructive = Main.numSolutions / constructives.length;
         int constructive = constructives[solIndex/timesPerConstructive % constructives.length];
-
+        sol.setObjective(constructive);
         switch (constructive){
             case 0: maxSumFunction(); break;
             case 1: maxMinFunction(); break;
