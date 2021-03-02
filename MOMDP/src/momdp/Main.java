@@ -11,7 +11,7 @@ import momdp.structure.Pareto;
 import momdp.structure.RandomManager;
 import momdp.structure.Solution;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +25,7 @@ public class Main {
 
     public final static int seed = 13;
     public final static int[] executions = new int[]{100/*,200,300,400,500,600,700,800,900,1000*/};
+    public final static int[] lsPCTs = new int[]{10,20,30,40,50,60,70,80,90,100};
     public static int numSolutions = 0;
     static float alpha=0.3f;
     static boolean randomAlpha = true;
@@ -49,17 +50,45 @@ public class Main {
     private final static VNS vns = new VNS(new LS_Swap());
     private final static boolean useVNS = false;
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         readData();
         float instanceCount = instances.size();
         int i = 0;
-        //TODO: guardar en un csv el tiempo de cada instancia
 
         long currentTime = System.currentTimeMillis();
 
-        long[] times = new long[executions.length];
+        long[][] times = new long[executions.length][lsPCTs.length];
+        String[][] names = new String[executions.length][lsPCTs.length];
 
-        for (Instance instance:instances) {
+        for (Instance instance:instances){
+            System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
+            RandomManager.setSeed(seed);
+
+            for(int j = 0; j < executions.length; j++){
+                numSolutions = executions[j];
+                Pareto.reset(numSolutions);
+                for(int w = 0; w < lsPCTs.length; w++){
+                    LS_Swap.unselectedPct = lsPCTs[w];
+                    LS_Swap.selectedPct = lsPCTs[w];
+                    long instanceTime = System.currentTimeMillis();
+                    constructive.solve(instance, numSolutions);
+                    for(ILocalSearch ls : localSearchForPareto){
+                        List<Solution> solutions = Pareto.getFrontCopy();
+                        for(Solution s : solutions){
+                            ls.localSearchSolution(s);
+                        }
+                    }
+                    if(useVNS) vns.solve(instance);
+                    times[j][w] += (System.currentTimeMillis() - instanceTime);
+                    String path = createSolFolder();
+                    names[j][w] = path.substring(pathSolFolder.length() +1);
+                    Pareto.saveToFile(path, instance);
+                }
+            }
+            i++;
+        }
+
+        /*for (Instance instance:instances) {
             Pareto.reset(numSolutions);
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
@@ -83,20 +112,76 @@ public class Main {
             }
 
             i++;
-        }
+        }*/
 
         long elapsed = System.currentTimeMillis() - currentTime;
         System.out.println("Total time: " + elapsed/1000f+"s");
-        System.out.println("Times:");
+        saveTimes(times, names);
+        /*System.out.println("Times:");
         int currentCount = 0;
         for(int j = 0; j < times.length; j++){
             System.out.println(currentCount+ times[j]);
             currentCount += times[j];
-        }
+        }*/
     }
 
     public static float getAlpha(){
         return randomAlpha ? RandomManager.getRandom().nextFloat() : alpha;
+    }
+
+    private static void saveTimes(long[][] times, String[][] names) throws IOException {
+        File file =new File(pathSolFolder+"/times.csv");
+        if(!file.exists()) file.createNewFile();
+
+        /*if(!file.exists()){
+            boolean bool = file.mkdir();
+            if(!bool) System.out.println("Problem creating the folder: "+ constructive.getName());
+        }*/
+        List<String> allLines = new ArrayList<>();
+        boolean[][] overrideCheck = new boolean[names.length][names[0].length];
+
+        try(BufferedReader br = new BufferedReader(new FileReader(file.getPath()))){
+            String line;
+            String[] parts;
+
+            while((line = br.readLine()) != null){
+                parts = line.split(";");
+                boolean override = false;
+                for(int j = 0; j < names.length; j++){
+                    for(int w = 0; w < names[0].length; w++){
+                        if(parts[0].equals(names[j][w])){
+                            override = true;
+                            allLines.add(names[j][w]+";"+(times[j][w]/1000.0));
+                            overrideCheck[j][w] = true;
+                            break;
+                        }
+                    }
+                    if(override) break;
+                }
+                if(!override) allLines.add(line);
+            }
+            for(int j = 0; j < names.length; j++){
+                for(int w = 0; w < names[0].length; w++){
+                    if(!overrideCheck[j][w]){
+                        allLines.add(names[j][w]+";"+(times[j][w]/1000.0));
+                    }
+                }
+            }
+        } catch (FileNotFoundException e){
+            System.out.println(("File not found " + file.getPath()));
+        } catch (IOException e){
+            System.out.println("Error reading line on " + file.getName());
+        }
+        System.out.println("Times: ");
+        try(PrintWriter pw = new PrintWriter(file.getPath())){
+            for(String l : allLines){
+                System.out.println(l);
+                pw.println(l);
+            }
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
     }
 
     private static void readData(){
