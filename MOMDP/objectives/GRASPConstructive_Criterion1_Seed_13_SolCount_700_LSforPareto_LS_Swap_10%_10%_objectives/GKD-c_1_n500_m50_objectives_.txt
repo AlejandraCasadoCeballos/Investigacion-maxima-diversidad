@@ -1,0 +1,14 @@
+Objective counts for pareto solutions:
+0;3029
+1;1003
+2;0
+3;0
+4;0
+
+Y: objective, X: times the X objective has been defeated by Y objective
+X/Y;1;2;3;4;5
+1;27581;0;0;0;0
+2;1234;1148;0;0;0
+3;0;0;0;0;0
+4;0;0;0;0;0
+5;0;0;0;0;0
