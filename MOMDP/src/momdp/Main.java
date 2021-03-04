@@ -25,7 +25,7 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int[] executions = new int[]{100,200,300,400,500,600,700,800,900,1000};
+    public final static int[] executions = new int[]{/*100,200,300,400,500,600,*/700/*,800,900,1000*/};
     public final static int[] lsPCTs = new int[]{/*10,20,30,40,50,60,70,80,90,*/100};
     public static int numSolutions = 0;
     static float alpha=1f;
@@ -43,7 +43,7 @@ public class Main {
 
     public final static boolean DEBUG = false;
     private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
-       //new LS_Swap(),
+       new LS_Swap(),
     });
     private final static ILocalSearch[] localSearchForPareto = new ILocalSearch[]{
         //new LS_Swap(),

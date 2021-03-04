@@ -134,12 +134,25 @@ public class TestMOMDP_Final {
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_500",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_600",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_800",*/
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_800",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_900",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_1000",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_1000",*/
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
                 //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_10%_10%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_20%_20%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_30%_30%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_40%_40%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_50%_50%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_60%_60%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_70%_70%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_80%_80%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_90%_90%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_100%_100 %",
+
+
+
         };
         boolean[] minimizing = new boolean[]{false, false, false, true, true};
         String pathJMetal = pathGlobal+"/jmetal";
