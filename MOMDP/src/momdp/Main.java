@@ -16,10 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class Main {
 
@@ -30,7 +27,7 @@ public class Main {
 
     public final static int seed = 13;
     public final static int[] executions = new int[]{700/*,200,300,400,500,600,700,800,900,1000*/};
-    public final static int[] lsPCTs = new int[]{10/*,20,30,40,50,60,70,80,90,100*/};
+    public final static int[] lsPCTs = new int[]{10,20,30,40,50,60,70,80,90,100};
     public static int numSolutions = 0;
     static float alpha=1f;
     static boolean randomAlpha = true;
@@ -73,8 +70,6 @@ public class Main {
         for (Instance instance:instances){
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
-
-
             for(int j = 0; j < executions.length; j++){
                 numSolutions = executions[j];
                 for(int w = 0; w < lsPCTs.length; w++){
@@ -88,25 +83,12 @@ public class Main {
                         if(useConcurrentLocalSearch){
                             CountDownLatch latch = new CountDownLatch(solutions.size());
                             for(Solution s : solutions){
-                                //ecs.submit(()->ls.localSearchSolution(s));
                                 executor.submit(() -> {
                                     ls.localSearchSolution(s);
                                     latch.countDown();
                                 });
                             }
-                            /*for(int t = 0; t < solutions.size(); t++){
-                                ecs.take();
-                            }*/
                             latch.await();
-
-                           /*for(Solution s : solutions){
-                                executor.submit(()->ls.localSearchSolution(s));
-                            }
-                            //executor.awaitTermination(999999999, TimeUnit.SECONDS);
-                            executor.shutdown();
-                            while(!executor.isTerminated()){
-                                executor.awaitTermination(999999999, TimeUnit.SECONDS);
-                            }*/
                         } else {
                             for(Solution s : solutions){
                                 ls.localSearchSolution(s);
@@ -124,31 +106,8 @@ public class Main {
             i++;
         }
 
-        /*for (Instance instance:instances) {
-            Pareto.reset(numSolutions);
-            System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
-            RandomManager.setSeed(seed);
-
-            numSolutions = 0;
-            int count = 0;
-            for(int j = 0; j < executions.length; j++){
-                long instanceTime = System.currentTimeMillis();
-                numSolutions = executions[j];
-                constructive.solve(instance, executions[j]-count);
-                for(ILocalSearch ls : localSearchForPareto){
-                    List<Solution> solutions = Pareto.getFrontCopy();
-                    for(Solution s : solutions){
-                        ls.localSearchSolution(s);
-                    }
-                }
-                count = executions[j];
-                if(useVNS) vns.solve(instance);
-                times[j] += (System.currentTimeMillis() - instanceTime);
-                Pareto.saveToFile(createSolFolder(), instance);
-            }
-
-            i++;
-        }*/
+        executor.shutdown();
+        executor.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
 
         long elapsed = System.currentTimeMillis() - currentTime;
         System.out.println("Total time: " + elapsed/1000f+"s");
