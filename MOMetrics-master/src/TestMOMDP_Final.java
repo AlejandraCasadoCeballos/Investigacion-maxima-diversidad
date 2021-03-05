@@ -115,45 +115,11 @@ public class TestMOMDP_Final {
     public static void evaluateDir() throws FileNotFoundException {
         String pathGlobal = "../MOMDP/pareto";
         String[] paths = new String[]{
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_OLD",
-                //"previo",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_0.00",
-                //"GRASPConstructive_Criterion3_Seed_13_SolCount_100_alpha_0.25",
-                //"GRASPConstructive_Criterion3_Seed_13_SolCount_100_alpha_0.50",
-                //"GRASPConstructive_Criterion3_Seed_13_SolCount_100_alpha_0.75",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_1.00",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_random",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_alpha_random_sin_PC",
-                //"previo",
-                /*"GRASPConstructive_Criterion1_Seed_13_SolCount_100",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_200",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_300",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_400",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_500",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_600",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_800",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_900",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_1000",*/
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_VNS_KMax_30.0",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LS_Swap",
 
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforPareto_LS_Swap_10%_10%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_10%_10%",
-                /*"GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_20%_20%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_30%_30%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_40%_40%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_50%_50%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_60%_60%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_70%_70%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_80%_80%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_90%_90%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_100_LSforPareto_LS_Swap_100%_100 %",*/
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LS_Swap",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",
 
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_10%_10%",
+                /*"GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_10%_10%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_20%_20%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_30%_30%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_40%_40%",
@@ -162,8 +128,7 @@ public class TestMOMDP_Final {
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_70%_70%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_80%_80%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_90%_90%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",
-                //"GRASPConstructive_Criterion1_Seed_13_SolCount_700_LS_Swap",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",*/
 
 
 
