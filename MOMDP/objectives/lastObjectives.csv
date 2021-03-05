@@ -1,13 +1,13 @@
 Objective counts for pareto solutions:
-0;3284
-1;2468
-2;339
-3;885
+0;10668
+1;8760
+2;43
+3;171
 4;0
 
 Objective functions times:
-maxSum;16570
-maxMin;19151
-maxMinSum;15985
-minDiff;16399
+maxSum;3639
+maxMin;4434
+maxMinSum;3455
+minDiff;3493
 minPCenter;0

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 public class Main {
 
@@ -25,8 +26,8 @@ public class Main {
     private static ArrayList<Instance> instances;
 
     public final static int seed = 13;
-    public final static int[] executions = new int[]{/*100,200,300,400,500,600,*/700/*,800,900,1000*/};
-    public final static int[] lsPCTs = new int[]{/*10,20,30,40,50,60,70,80,90,*/100};
+    public final static int[] executions = new int[]{700/*,200,300,400,500,600,700,800,900,1000*/};
+    public final static int[] lsPCTs = new int[]{10,20,30,40,50,60,70,80,90,100};
     public static int numSolutions = 0;
     static float alpha=1f;
     static boolean randomAlpha = true;
@@ -43,15 +44,20 @@ public class Main {
 
     public final static boolean DEBUG = false;
     private final static IConstructive constructive =new GRASPConstructive_Criterion1().AddLocalSearchObjs(new ILocalSearch[]{
-       new LS_Swap(),
+       //new LS_Swap(),
     });
     private final static ILocalSearch[] localSearchForPareto = new ILocalSearch[]{
-        //new LS_Swap(),
+        new LS_Swap(),
     };
     private final static VNS vns = new VNS(new LS_Swap());
     private final static boolean useVNS = false;
 
-    public static void main(String[] args) throws IOException {
+    //Executors.newFixedThreadPool(Runtime.getRunTime().availableProcessors());
+    private static ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    //private static ExecutorCompletionService ecs = new ExecutorCompletionService(executor);
+    private final static boolean useConcurrentLocalSearch = true;
+
+    public static void main(String[] args) throws IOException, InterruptedException {
         readData();
         float instanceCount = instances.size();
         int i = 0;
@@ -64,7 +70,6 @@ public class Main {
         for (Instance instance:instances){
             System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
             RandomManager.setSeed(seed);
-
             for(int j = 0; j < executions.length; j++){
                 numSolutions = executions[j];
                 for(int w = 0; w < lsPCTs.length; w++){
@@ -75,9 +80,21 @@ public class Main {
                     constructive.solve(instance, numSolutions);
                     for(ILocalSearch ls : localSearchForPareto){
                         List<Solution> solutions = Pareto.getFrontCopy();
-                        for(Solution s : solutions){
-                            ls.localSearchSolution(s);
+                        if(useConcurrentLocalSearch){
+                            CountDownLatch latch = new CountDownLatch(solutions.size());
+                            for(Solution s : solutions){
+                                executor.submit(() -> {
+                                    ls.localSearchSolution(s);
+                                    latch.countDown();
+                                });
+                            }
+                            latch.await();
+                        } else {
+                            for(Solution s : solutions){
+                                ls.localSearchSolution(s);
+                            }
                         }
+
                     }
                     if(useVNS) vns.solve(instance);
                     times[j][w] += (System.currentTimeMillis() - instanceTime);
@@ -89,31 +106,8 @@ public class Main {
             i++;
         }
 
-        /*for (Instance instance:instances) {
-            Pareto.reset(numSolutions);
-            System.out.println("Solving " + instance.getName() +", " + i/instanceCount*100f+"%");
-            RandomManager.setSeed(seed);
-
-            numSolutions = 0;
-            int count = 0;
-            for(int j = 0; j < executions.length; j++){
-                long instanceTime = System.currentTimeMillis();
-                numSolutions = executions[j];
-                constructive.solve(instance, executions[j]-count);
-                for(ILocalSearch ls : localSearchForPareto){
-                    List<Solution> solutions = Pareto.getFrontCopy();
-                    for(Solution s : solutions){
-                        ls.localSearchSolution(s);
-                    }
-                }
-                count = executions[j];
-                if(useVNS) vns.solve(instance);
-                times[j] += (System.currentTimeMillis() - instanceTime);
-                Pareto.saveToFile(createSolFolder(), instance);
-            }
-
-            i++;
-        }*/
+        executor.shutdown();
+        executor.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
 
         long elapsed = System.currentTimeMillis() - currentTime;
         System.out.println("Total time: " + elapsed/1000f+"s");
@@ -193,7 +187,7 @@ public class Main {
     public static String createSolFolder(){
         String path=pathSolFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax()+"_KStep_"+vns.getkStep() : "");
         if(localSearchForPareto.length > 0){
-            path += "_LSforPareto";
+            path += "_LSforPareto" + (useConcurrentLocalSearch ? "Concurrent" : "");
         }
         for(ILocalSearch ls : localSearchForPareto){
             path+= "_" + ls.getName();
@@ -210,7 +204,7 @@ public class Main {
     public static String createObjectiveFolder(){
         String path=pathObjectivesFolder+"/"+constructive.getName()+(useVNS ? "_VNS_KMax_"+vns.getkMax()+"_KStep_"+vns.getkStep() : "");
         if(localSearchForPareto.length > 0){
-            path += "_LSforPareto";
+            path += "_LSforPareto" + (useConcurrentLocalSearch ? "Concurrent" : "");
         }
         for(ILocalSearch ls : localSearchForPareto){
             path+= "_" + ls.getName();

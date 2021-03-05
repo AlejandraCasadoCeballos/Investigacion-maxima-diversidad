@@ -6,6 +6,8 @@ import momdp.constructive.grasp.GRASPConstructive;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class Pareto {
 
@@ -15,6 +17,8 @@ public abstract class Pareto {
     private static int[] totalCounts = new int[5];
     private static int[][] defeatedTotalCount = new int[5][5];
 
+    private static Lock lock = new ReentrantLock();
+
     public static void reset(int numSolutions){
         front = new ArrayList<>(numSolutions);
         discarded = new ArrayList<>(3000);
@@ -23,9 +27,10 @@ public abstract class Pareto {
     public static boolean add(Solution solution){
         solution.calculateMetrics();
         int i = 0;
-        int size = front.size();
         Solution frontSol;
         boolean enter = true;
+        lock.lock();
+        int size = front.size();
         while(i < size){
             frontSol = front.get(i);
             boolean anyBetter = solution.getMaxSum() > frontSol.getMaxSum() ||
@@ -53,6 +58,7 @@ public abstract class Pareto {
             } else i++;
         }
         if(enter)front.add(solution.clone());
+        lock.unlock();
         return enter;
     }
 
@@ -153,7 +159,8 @@ public abstract class Pareto {
     public static List<Solution> getFront() {
         return front;
     }
-    public static List<Solution> getFrontCopy(){
+
+    public synchronized static List<Solution> getFrontCopy(){
         List<Solution> aux = new ArrayList<>(front.size());
         for(Solution s : front) aux.add(s.clone());
         return aux;
