@@ -20,7 +20,7 @@ public class MOFLPSolver {
         String date = String.format("%04d-%02d-%02d", year, month, day);
 
         String pathIn = "../MOMDP/instances/";
-        String instanceSet = (args.length>0)?args[0]:"preliminar";
+        String instanceSet = (args.length>0)?args[0]:"all";
         String dir = ((args.length>0)?args[1]:pathIn)+instanceSet;
         String outDir = "./pareto/";
         File outDirCreator = new File(outDir);

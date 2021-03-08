@@ -116,10 +116,10 @@ public class TestMOMDP_Final {
         String pathGlobal = "../MOMDP/pareto";
         String[] paths = new String[]{
 
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LS_Swap",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",
+                /*"GRASPConstructive_Criterion1_Seed_13_SolCount_700_LS_Swap",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",*/
 
-                /*"GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_10%_10%",
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_10%_10%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_20%_20%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_30%_30%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_40%_40%",
@@ -128,7 +128,7 @@ public class TestMOMDP_Final {
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_70%_70%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_80%_80%",
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_90%_90%",
-                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",*/
+                "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",
 
 
 
