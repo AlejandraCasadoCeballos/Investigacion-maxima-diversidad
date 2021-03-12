@@ -54,7 +54,7 @@ public class MOFLPSolver {
                 pwPareto.println((-obj[0])+" "+(-obj[1])+" "+(-obj[2])+" "+obj[3]+" "+obj[4]);
                 System.out.println();
             }
-            pw.println(millisecs);
+            pw.println(millisecs/1000f);
             System.out.println(result.size()+"\t"+millisecs);
             pwPareto.close();
         }
