@@ -40,7 +40,7 @@ public class MOFLPSolver {
             long timeIni = System.currentTimeMillis();
             NondominatedPopulation result = new Executor()
                     .withProblemClass(MOMDPProblem.class, path)
-                    .withAlgorithm("NSGAIII")
+                    .withAlgorithm("SPEA2")
                     .withMaxEvaluations(250000) //250000
                     .withProperty("populationSize", 500)
                     .run();
