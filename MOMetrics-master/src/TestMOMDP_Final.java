@@ -120,7 +120,8 @@ public class TestMOMDP_Final {
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_100%_100%",*/
 
                 "GRASPConstructive_Criterion1_Seed_13_SolCount_700_LSforParetoConcurrent_LS_Swap_10%_10%",
-                "previoNSGAIII"
+                "previoNSGAIII",
+                "previoMOEAD"
 
 
 
