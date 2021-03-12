@@ -75,40 +75,6 @@ public class LS_Swap implements ILocalSearch {
                 if(improvement) break;
             }
         }
-
-        /*while(!solutionsToImprove.isEmpty()){ //Mientras haya soluciones parciales a mejorar
-            boolean improvement=false;
-            sol = solutionsToImprove.remove();
-            for(int i=0;i<numNodesSol;i++){
-                for(int j=0; j<diff; j++){
-                    ElemDist unselectedNode = unselectedNodes.remove(j);
-                    ElemDist selectedNode = selectedNodes.remove(i);
-                    sol.getSolElements().remove(Integer.valueOf(selectedNode.node));
-                    sol.getSolElements().add(unselectedNode.node);
-
-                    unselectedNodes.add(selectedNode);
-
-                    if(Pareto.add(sol)){
-                        solutionsToImprove.add(sol.clone());
-                        improvement=true;
-                        anyImprovement = true;
-                        selectedNodes.add(unselectedNode);
-                        if(firstImprovement) break;
-                    } else {
-                        selectedNodes.add(selectedNode);
-                    }
-                    sol.getSolElements().remove(numNodesSol-1);
-                    sol.getSolElements().add(selectedNode.node);
-                    if(!firstImprovement){
-
-                        selectedNodes.add(selectedNode);
-                        unselectedNodes.remove(diff-1);
-                        unselectedNodes.add(unselectedNode);
-                    }
-                }
-                if(firstImprovement && improvement) break;
-            }
-        }*/
         return anyImprovement;
     }
 

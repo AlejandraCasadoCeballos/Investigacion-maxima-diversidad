@@ -27,7 +27,7 @@ public class Main {
 
     public final static int seed = 13;
     public final static int[] executions = new int[]{700/*,200,300,400,500,600,700,800,900,1000*/};
-    public final static int[] lsPCTs = new int[]{10,20,30,40,50,60,70,80,90,100};
+    public final static int[] lsPCTs = new int[]{10/*,20,30,40,50,60,70,80,90,100*/};
     public static int numSolutions = 0;
     static float alpha=1f;
     static boolean randomAlpha = true;
@@ -36,7 +36,7 @@ public class Main {
     private final static boolean readAllFolders = false;
     private final static boolean readAllInstances = true;
 
-    private final static String folderIndex = "preliminar";
+    private final static String folderIndex = "all";
     private final static String instanceIndex = "GKD-a_32_n15_m4.txt";
 
     private static List<String> instancesNames;
